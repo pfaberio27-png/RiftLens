@@ -1,29 +1,219 @@
 import os
 import time
-import requests
 import json
+import requests
+
 from dotenv import load_dotenv
+
 
 load_dotenv("backend/.env")
 
 RIOT_API_KEY = os.getenv("RIOT_API_KEY")
 
-RIOT_API_URL = "https://americas.api.riotgames.com"
+
+# ============================================================
+# CONFIGURACIÓN DE REGIONES RIOT
+# ============================================================
+
+PLATAFORMAS_RIOT = {
+
+    "BR": {
+        "plataforma": "br1",
+        "routing": "americas",
+    },
+
+    "LAN": {
+        "plataforma": "la1",
+        "routing": "americas",
+    },
+
+    "LAS": {
+        "plataforma": "la2",
+        "routing": "americas",
+    },
+
+    "NA": {
+        "plataforma": "na1",
+        "routing": "americas",
+    },
+
+
+    "EUW": {
+        "plataforma": "euw1",
+        "routing": "europe",
+    },
+
+    "EUNE": {
+        "plataforma": "eun1",
+        "routing": "europe",
+    },
+
+    "TR": {
+        "plataforma": "tr1",
+        "routing": "europe",
+    },
+
+    "RU": {
+        "plataforma": "ru",
+        "routing": "europe",
+    },
+
+
+    "KR": {
+        "plataforma": "kr",
+        "routing": "asia",
+    },
+
+    "JP": {
+        "plataforma": "jp1",
+        "routing": "asia",
+    },
+
+
+    "OCE": {
+        "plataforma": "oc1",
+        "routing": "sea",
+    },
+
+    "PH": {
+        "plataforma": "ph2",
+        "routing": "sea",
+    },
+
+    "SG": {
+        "plataforma": "sg2",
+        "routing": "sea",
+    },
+
+    "TH": {
+        "plataforma": "th2",
+        "routing": "sea",
+    },
+
+    "TW": {
+        "plataforma": "tw2",
+        "routing": "sea",
+    },
+
+    "VN": {
+        "plataforma": "vn2",
+        "routing": "sea",
+    },
+}
+
 
 # ============================================================
 # ARCHIVO LOCAL DE PARTIDAS
 # ============================================================
 
 RUTA_PARTIDAS = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)),
+    os.path.dirname(
+        os.path.dirname(__file__)
+    ),
     "data",
     "partidas.json"
 )
 
 
+# ============================================================
+# EXCEPCIÓN PARA LÍMITE DE RIOT API
+# ============================================================
+
+class RiotRateLimitException(Exception):
+
+    def __init__(
+        self,
+        mensaje,
+        retry_after=None
+    ):
+        self.mensaje = mensaje
+        self.retry_after = retry_after
+
+        super().__init__(
+            mensaje
+        )
+
+
+# ============================================================
+# CONFIGURACIÓN DE REGIÓN
+# ============================================================
+
+def obtener_configuracion_region(
+    region: str
+):
+
+    region_normalizada = (
+        region
+        .strip()
+        .upper()
+    )
+
+    configuracion = (
+        PLATAFORMAS_RIOT.get(
+            region_normalizada
+        )
+    )
+
+    if not configuracion:
+
+        raise Exception(
+            f"Región no soportada: {region}"
+        )
+
+    return configuracion
+
+
+def obtener_url_regional(
+    region: str
+):
+
+    configuracion = (
+        obtener_configuracion_region(
+            region
+        )
+    )
+
+    routing = (
+        configuracion[
+            "routing"
+        ]
+    )
+
+    return (
+        f"https://{routing}.api.riotgames.com"
+    )
+
+
+def obtener_url_plataforma(
+    region: str
+):
+
+    configuracion = (
+        obtener_configuracion_region(
+            region
+        )
+    )
+
+    plataforma = (
+        configuracion[
+            "plataforma"
+        ]
+    )
+
+    return (
+        f"https://{plataforma}.api.riotgames.com"
+    )
+
+
+# ============================================================
+# FUNCIONES DE CACHÉ
+# ============================================================
+
 def cargar_partidas_guardadas():
 
-    if not os.path.exists(RUTA_PARTIDAS):
+    if not os.path.exists(
+        RUTA_PARTIDAS
+    ):
 
         return {
             "jugadores": {}
@@ -37,7 +227,9 @@ def cargar_partidas_guardadas():
             encoding="utf-8"
         ) as archivo:
 
-            return json.load(archivo)
+            return json.load(
+                archivo
+            )
 
     except json.JSONDecodeError:
 
@@ -46,10 +238,14 @@ def cargar_partidas_guardadas():
         }
 
 
-def guardar_partidas_guardadas(datos):
+def guardar_partidas_guardadas(
+    datos
+):
 
     os.makedirs(
-        os.path.dirname(RUTA_PARTIDAS),
+        os.path.dirname(
+            RUTA_PARTIDAS
+        ),
         exist_ok=True
     )
 
@@ -66,18 +262,127 @@ def guardar_partidas_guardadas(datos):
             indent=4
         )
 
-def obtener_rango_jugador(
-    puuid: str,
-    plataforma: str = "la2"
+
+# ============================================================
+# FUNCIÓN AUXILIAR PARA VALIDAR API KEY
+# ============================================================
+
+def validar_api_key():
+
+    if not RIOT_API_KEY:
+
+        raise Exception(
+            "No se encontró RIOT_API_KEY en el archivo .env"
+        )
+
+
+# ============================================================
+# 1. OBTENER CUENTA POR RIOT ID
+# ============================================================
+
+def obtener_cuenta_por_riot_id(
+    game_name: str,
+    tag_line: str,
+    region: str
 ):
 
+    validar_api_key()
+
+    base_url = (
+        obtener_url_regional(
+            region
+        )
+    )
+
     url = (
-        f"https://{plataforma}.api.riotgames.com"
+        f"{base_url}"
+        f"/riot/account/v1/accounts/by-riot-id/"
+        f"{game_name}/{tag_line}"
+    )
+
+    headers = {
+        "X-Riot-Token":
+            RIOT_API_KEY
+    }
+
+    response = requests.get(
+        url,
+        headers=headers,
+        timeout=10
+    )
+
+    if response.status_code == 200:
+
+        return response.json()
+
+    if response.status_code == 400:
+
+        raise Exception(
+            "Solicitud incorrecta a Riot API."
+        )
+
+    if response.status_code == 401:
+
+        raise Exception(
+            "API Key no autorizada."
+        )
+
+    if response.status_code == 403:
+
+        raise Exception(
+            "API Key inválida o expirada."
+        )
+
+    if response.status_code == 404:
+
+        raise Exception(
+            "No se encontró el jugador."
+        )
+
+    if response.status_code == 429:
+
+        retry_after = (
+            response.headers.get(
+                "Retry-After"
+            )
+        )
+
+        raise RiotRateLimitException(
+            "Se alcanzó el límite de solicitudes de Riot API.",
+            retry_after
+        )
+
+    raise Exception(
+        "Error de Riot API. "
+        f"Código HTTP: {response.status_code}"
+    )
+
+
+# ============================================================
+# 2. OBTENER RANGO DEL JUGADOR
+# ============================================================
+
+def obtener_rango_jugador(
+    puuid: str,
+    region: str
+):
+
+    validar_api_key()
+
+    base_url = (
+        obtener_url_plataforma(
+            region
+        )
+    )
+
+    url = (
+        f"{base_url}"
         f"/lol/league/v4/entries/by-puuid/{puuid}"
     )
 
     headers = {
-        "X-Riot-Token": RIOT_API_KEY
+        "X-Riot-Token":
+            RIOT_API_KEY
     }
 
     try:
@@ -89,29 +394,48 @@ def obtener_rango_jugador(
         )
 
         if response.status_code == 429:
+
+            retry_after = (
+                response.headers.get(
+                    "Retry-After"
+                )
+            )
+
             raise RiotRateLimitException(
-                "Se alcanzó el límite de solicitudes de Riot API."
+                "Se alcanzó el límite de solicitudes de Riot API.",
+                retry_after
+            )
+
+        if response.status_code == 401:
+
+            raise Exception(
+                "API Key no autorizada."
+            )
+
+        if response.status_code == 403:
+
+            raise Exception(
+                "API Key inválida o expirada."
             )
 
         response.raise_for_status()
 
         ligas = response.json()
 
-
-        # ================================================
-        # BUSCAR SOLO/DUO
-        # ================================================
-
         solo_duo = next(
             (
                 liga
                 for liga in ligas
-                if liga.get("queueType")
-                == "RANKED_SOLO_5x5"
+                if (
+                    liga.get(
+                        "queueType"
+                    )
+                    ==
+                    "RANKED_SOLO_5x5"
+                )
             ),
             None
         )
-
 
         if not solo_duo:
 
@@ -125,35 +449,27 @@ def obtener_rango_jugador(
                 "derrotas": 0
             }
 
-
         return {
-
             "clasificado": True,
-
             "cola": "Solo/Duo",
-
             "tier":
                 solo_duo.get(
                     "tier"
                 ),
-
             "division":
                 solo_duo.get(
                     "rank"
                 ),
-
             "lp":
                 solo_duo.get(
                     "leaguePoints",
                     0
                 ),
-
             "victorias":
                 solo_duo.get(
                     "wins",
                     0
                 ),
-
             "derrotas":
                 solo_duo.get(
                     "losses",
@@ -161,8 +477,8 @@ def obtener_rango_jugador(
                 )
         }
 
-
     except RiotRateLimitException:
+
         raise
 
     except Exception as error:
@@ -181,109 +497,36 @@ def obtener_rango_jugador(
             "victorias": 0,
             "derrotas": 0
         }
-        
-# ============================================================
-# EXCEPCIÓN PARA LÍMITE DE RIOT API
-# ============================================================
-
-class RiotRateLimitException(Exception):
-
-    def __init__(self, mensaje, retry_after=None):
-        self.mensaje = mensaje
-        self.retry_after = retry_after
-
-        super().__init__(mensaje)
 
 
 # ============================================================
-# 1. OBTENER CUENTA POR RIOT ID
-# ============================================================
-
-def obtener_cuenta_por_riot_id(game_name: str, tag_line: str):
-
-    if not RIOT_API_KEY:
-        raise Exception(
-            "No se encontró RIOT_API_KEY en el archivo .env"
-        )
-
-    url = (
-        f"{RIOT_API_URL}"
-        f"/riot/account/v1/accounts/by-riot-id/"
-        f"{game_name}/{tag_line}"
-    )
-
-    headers = {
-        "X-Riot-Token": RIOT_API_KEY
-    }
-
-    response = requests.get(
-        url,
-        headers=headers,
-        timeout=10
-    )
-
-    if response.status_code == 200:
-        return response.json()
-
-    if response.status_code == 400:
-        raise Exception(
-            "Solicitud incorrecta a Riot API."
-        )
-
-    if response.status_code == 401:
-        raise Exception(
-            "API Key no autorizada."
-        )
-
-    if response.status_code == 403:
-        raise Exception(
-            "API Key inválida o expirada."
-        )
-
-    if response.status_code == 404:
-        raise Exception(
-            "No se encontró el jugador."
-        )
-
-    if response.status_code == 429:
-
-        retry_after = response.headers.get(
-            "Retry-After"
-        )
-
-        raise RiotRateLimitException(
-            "Se alcanzó el límite de solicitudes de Riot API.",
-            retry_after
-        )
-
-    raise Exception(
-        f"Error de Riot API. Código HTTP: {response.status_code}"
-    )
-
-
-# ============================================================
-# 2. OBTENER IDS DE PARTIDAS POR PUUID
+# 3. OBTENER IDS DE PARTIDAS POR PUUID
 # ============================================================
 
 def obtener_ids_partidas_por_puuid(
     puuid: str,
+    region: str,
     start: int = 0,
     count: int = 100
 ):
 
-    if not RIOT_API_KEY:
-        raise Exception(
-            "No se encontró RIOT_API_KEY en el archivo .env"
+    validar_api_key()
+
+    base_url = (
+        obtener_url_regional(
+            region
         )
+    )
 
     url = (
-        f"{RIOT_API_URL}"
+        f"{base_url}"
         f"/lol/match/v5/matches/by-puuid/"
         f"{puuid}/ids"
     )
 
     headers = {
-        "X-Riot-Token": RIOT_API_KEY
+        "X-Riot-Token":
+            RIOT_API_KEY
     }
 
     params = {
@@ -299,32 +542,39 @@ def obtener_ids_partidas_por_puuid(
     )
 
     if response.status_code == 200:
+
         return response.json()
 
     if response.status_code == 400:
+
         raise Exception(
             "Solicitud incorrecta a Riot API."
         )
 
     if response.status_code == 401:
+
         raise Exception(
             "API Key no autorizada."
         )
 
     if response.status_code == 403:
+
         raise Exception(
             "API Key inválida o expirada."
         )
 
     if response.status_code == 404:
+
         raise Exception(
             "No se encontraron partidas para el jugador."
         )
 
     if response.status_code == 429:
 
-        retry_after = response.headers.get(
-            "Retry-After"
+        retry_after = (
+            response.headers.get(
+                "Retry-After"
+            )
         )
 
         raise RiotRateLimitException(
@@ -333,28 +583,36 @@ def obtener_ids_partidas_por_puuid(
         )
 
     raise Exception(
-        f"Error de Riot API. Código HTTP: {response.status_code}"
+        "Error de Riot API. "
+        f"Código HTTP: {response.status_code}"
     )
 
 
 # ============================================================
-# 3. OBTENER INFORMACIÓN DE UNA PARTIDA
+# 4. OBTENER INFORMACIÓN DE UNA PARTIDA
 # ============================================================
 
-def obtener_partida_por_id(match_id: str):
+def obtener_partida_por_id(
+    match_id: str,
+    region: str
+):
 
-    if not RIOT_API_KEY:
-        raise Exception(
-            "No se encontró RIOT_API_KEY en el archivo .env"
+    validar_api_key()
+
+    base_url = (
+        obtener_url_regional(
+            region
         )
+    )
 
     url = (
-        f"{RIOT_API_URL}"
+        f"{base_url}"
         f"/lol/match/v5/matches/{match_id}"
     )
 
     headers = {
-        "X-Riot-Token": RIOT_API_KEY
+        "X-Riot-Token":
+            RIOT_API_KEY
     }
 
     response = requests.get(
@@ -364,32 +622,39 @@ def obtener_partida_por_id(match_id: str):
     )
 
     if response.status_code == 200:
+
         return response.json()
 
     if response.status_code == 400:
+
         raise Exception(
             "Solicitud incorrecta a Riot API."
         )
 
     if response.status_code == 401:
+
         raise Exception(
             "API Key no autorizada."
         )
 
     if response.status_code == 403:
+
         raise Exception(
             "API Key inválida o expirada."
         )
 
     if response.status_code == 404:
+
         raise Exception(
             "No se encontró la partida."
         )
 
     if response.status_code == 429:
 
-        retry_after = response.headers.get(
-            "Retry-After"
+        retry_after = (
+            response.headers.get(
+                "Retry-After"
+            )
         )
 
         raise RiotRateLimitException(
@@ -398,12 +663,13 @@ def obtener_partida_por_id(match_id: str):
         )
 
     raise Exception(
-        f"Error de Riot API. Código HTTP: {response.status_code}"
+        "Error de Riot API. "
+        f"Código HTTP: {response.status_code}"
     )
 
 
 # ============================================================
-# 4. EXTRAER ESTADÍSTICAS DEL JUGADOR
+# 5. EXTRAER ESTADÍSTICAS DEL JUGADOR
 # ============================================================
 
 def extraer_estadisticas_jugador(
@@ -414,19 +680,7 @@ def extraer_estadisticas_jugador(
     Extrae las estadísticas principales del jugador
     y también identifica al rival del equipo contrario
     que ocupó la misma posición.
-
-    Esto permite posteriormente mostrar en el frontend:
-
-        Sylas VS Bel'Veth
-        Ahri VS Syndra
-        Jhin VS Kai'Sa
-
-    según el rol de cada partida.
     """
-
-    # ========================================================
-    # INFORMACIÓN GENERAL DE LA PARTIDA
-    # ========================================================
 
     info = partida.get(
         "info",
@@ -439,6 +693,7 @@ def extraer_estadisticas_jugador(
     )
 
     if not participantes:
+
         raise Exception(
             "La partida no contiene participantes."
         )
@@ -452,88 +707,112 @@ def extraer_estadisticas_jugador(
 
     for participante in participantes:
 
-        if participante.get(
-            "puuid"
-        ) == puuid:
+        if (
+            participante.get(
+                "puuid"
+            )
+            ==
+            puuid
+        ):
 
             jugador = participante
+
             break
 
 
     if not jugador:
+
         raise Exception(
             "El jugador no se encuentra en esta partida."
         )
 
 
     # ========================================================
-    # DATOS DEL JUGADOR
+    # DATOS PRINCIPALES
     # ========================================================
 
-    team_id_jugador = jugador.get(
-        "teamId"
+    team_id_jugador = (
+        jugador.get(
+            "teamId"
+        )
     )
 
-    posicion = jugador.get(
-        "teamPosition"
+    posicion = (
+        jugador.get(
+            "teamPosition"
+        )
     )
 
-    champion_name = jugador.get(
-        "championName"
+    champion_name = (
+        jugador.get(
+            "championName"
+        )
     )
 
-    champion_id = jugador.get(
-        "championId"
+    champion_id = (
+        jugador.get(
+            "championId"
+        )
     )
 
 
     # ========================================================
-    # BUSCAR RIVAL DE LA MISMA POSICIÓN
+    # RIVAL DE LA MISMA POSICIÓN
     # ========================================================
 
     rival_rol = None
-
 
     if posicion:
 
         for participante in participantes:
 
-            # No puede ser el mismo jugador
-            if participante.get(
-                "puuid"
-            ) == puuid:
+            if (
+                participante.get(
+                    "puuid"
+                )
+                ==
+                puuid
+            ):
                 continue
 
-            # Debe pertenecer al equipo contrario
-            if participante.get(
-                "teamId"
-            ) == team_id_jugador:
+            if (
+                participante.get(
+                    "teamId"
+                )
+                ==
+                team_id_jugador
+            ):
                 continue
 
-            # Debe ocupar la misma posición
-            if participante.get(
-                "teamPosition"
-            ) != posicion:
+            if (
+                participante.get(
+                    "teamPosition"
+                )
+                !=
+                posicion
+            ):
                 continue
 
 
-            # ------------------------------------------------
-            # Encontramos al rival directo del rol
-            # ------------------------------------------------
-
-            rival_kills = participante.get(
-                "kills",
-                0
+            rival_kills = (
+                participante.get(
+                    "kills",
+                    0
+                )
             )
 
-            rival_deaths = participante.get(
-                "deaths",
-                0
+            rival_deaths = (
+                participante.get(
+                    "deaths",
+                    0
+                )
             )
 
-            rival_assists = participante.get(
-                "assists",
-                0
+            rival_assists = (
+                participante.get(
+                    "assists",
+                    0
+                )
             )
 
 
@@ -541,14 +820,16 @@ def extraer_estadisticas_jugador(
 
                 rival_kda = (
                     rival_kills
-                    + rival_assists
+                    +
+                    rival_assists
                 ) / rival_deaths
 
             else:
 
                 rival_kda = (
                     rival_kills
-                    + rival_assists
+                    +
+                    rival_assists
                 )
 
 
@@ -632,9 +913,11 @@ def extraer_estadisticas_jugador(
     # DURACIÓN
     # ========================================================
 
-    game_duration = info.get(
-        "gameDuration",
-        0
+    game_duration = (
+        info.get(
+            "gameDuration",
+            0
+        )
     )
 
     minutos = (
@@ -645,31 +928,28 @@ def extraer_estadisticas_jugador(
 
 
     # ========================================================
-    # DATOS GENERALES
-    # ========================================================
-
-    queue_id = info.get(
-        "queueId"
-    )
-
-
-    # ========================================================
     # COMBATE
     # ========================================================
 
-    kills = jugador.get(
-        "kills",
-        0
+    kills = (
+        jugador.get(
+            "kills",
+            0
+        )
     )
 
-    deaths = jugador.get(
-        "deaths",
-        0
+    deaths = (
+        jugador.get(
+            "deaths",
+            0
+        )
     )
 
-    assists = jugador.get(
-        "assists",
-        0
+    assists = (
+        jugador.get(
+            "assists",
+            0
+        )
     )
 
 
@@ -677,14 +957,16 @@ def extraer_estadisticas_jugador(
 
         kda = (
             kills
-            + assists
+            +
+            assists
         ) / deaths
 
     else:
 
         kda = (
             kills
-            + assists
+            +
+            assists
         )
 
 
@@ -704,7 +986,6 @@ def extraer_estadisticas_jugador(
         )
     )
 
-
     cs_por_minuto = (
         cs / minutos
         if minutos > 0
@@ -716,11 +997,12 @@ def extraer_estadisticas_jugador(
     # ECONOMÍA
     # ========================================================
 
-    oro = jugador.get(
-        "goldEarned",
-        0
+    oro = (
+        jugador.get(
+            "goldEarned",
+            0
+        )
     )
-
 
     oro_por_minuto = (
         oro / minutos
@@ -733,11 +1015,12 @@ def extraer_estadisticas_jugador(
     # DAÑO
     # ========================================================
 
-    daño = jugador.get(
-        "totalDamageDealtToChampions",
-        0
+    daño = (
+        jugador.get(
+            "totalDamageDealtToChampions",
+            0
+        )
     )
-
 
     daño_por_minuto = (
         daño / minutos
@@ -751,10 +1034,6 @@ def extraer_estadisticas_jugador(
     # ========================================================
 
     return {
-
-        # ----------------------------------------------------
-        # JUGADOR
-        # ----------------------------------------------------
 
         "jugador": {
 
@@ -776,10 +1055,6 @@ def extraer_estadisticas_jugador(
         },
 
 
-        # ----------------------------------------------------
-        # PARTIDA
-        # ----------------------------------------------------
-
         "partida": {
 
             "match_id":
@@ -796,7 +1071,9 @@ def extraer_estadisticas_jugador(
                 ),
 
             "queue_id":
-                queue_id,
+                info.get(
+                    "queueId"
+                ),
 
             "posicion":
                 posicion,
@@ -822,10 +1099,6 @@ def extraer_estadisticas_jugador(
         },
 
 
-        # ----------------------------------------------------
-        # RESULTADO
-        # ----------------------------------------------------
-
         "resultado": {
 
             "victoria":
@@ -835,10 +1108,6 @@ def extraer_estadisticas_jugador(
                 )
         },
 
-
-        # ----------------------------------------------------
-        # CAMPEÓN
-        # ----------------------------------------------------
 
         "campeon": {
 
@@ -854,10 +1123,6 @@ def extraer_estadisticas_jugador(
                 )
         },
 
-
-        # ----------------------------------------------------
-        # COMBATE
-        # ----------------------------------------------------
 
         "combate": {
 
@@ -878,10 +1143,6 @@ def extraer_estadisticas_jugador(
         },
 
 
-        # ----------------------------------------------------
-        # FARMEO
-        # ----------------------------------------------------
-
         "farmeo": {
 
             "cs":
@@ -894,10 +1155,6 @@ def extraer_estadisticas_jugador(
                 )
         },
 
-
-        # ----------------------------------------------------
-        # ECONOMÍA
-        # ----------------------------------------------------
 
         "economia": {
 
@@ -912,10 +1169,6 @@ def extraer_estadisticas_jugador(
         },
 
 
-        # ----------------------------------------------------
-        # DAÑO
-        # ----------------------------------------------------
-
         "daño": {
 
             "daño_campeones":
@@ -928,10 +1181,6 @@ def extraer_estadisticas_jugador(
                 )
         },
 
-
-        # ----------------------------------------------------
-        # VISIÓN
-        # ----------------------------------------------------
 
         "vision": {
 
@@ -961,63 +1210,71 @@ def extraer_estadisticas_jugador(
         },
 
 
-        # ----------------------------------------------------
-        # RIVAL DEL MISMO ROL
-        # ----------------------------------------------------
-
         "rival_rol":
             rival_rol
     }
 
 
 # ============================================================
-# 5. OBTENER ESTADÍSTICAS DE LAS ÚLTIMAS PARTIDAS
+# 6. OBTENER ESTADÍSTICAS DE LAS ÚLTIMAS PARTIDAS
 # ============================================================
 
 def obtener_estadisticas_ultimas_partidas(
     puuid: str,
+    region: str,
     count: int = 100
 ):
     """
-    Obtiene las últimas partidas del jugador.
-
-    Utiliza partidas.json como caché.
-
-    Si una partida antigua fue almacenada antes de incorporar
-    la información del rival de rol, esa partida se vuelve
-    a consultar para actualizar su estructura.
+    Obtiene las últimas partidas del jugador
+    utilizando partidas.json como caché.
     """
 
-    # ========================================================
-    # 1. CARGAR PARTIDAS GUARDADAS
-    # ========================================================
-
-    datos = cargar_partidas_guardadas()
-
-    jugadores = datos.setdefault(
-        "jugadores",
-        {}
+    datos = (
+        cargar_partidas_guardadas()
     )
 
-    jugador_guardado = jugadores.get(
-        puuid,
-        {}
-    )
-
-    partidas_guardadas = jugador_guardado.get(
-        "partidas",
-        {}
+    jugadores = (
+        datos.setdefault(
+            "jugadores",
+            {}
+        )
     )
 
 
     # ========================================================
-    # 2. OBTENER IDS RECIENTES
+    # CACHÉ SEPARADO POR PUUID + REGIÓN
     # ========================================================
 
-    partidas_ids = obtener_ids_partidas_por_puuid(
-        puuid=puuid,
-        start=0,
-        count=count
+    clave_jugador = (
+        f"{region.upper()}:{puuid}"
+    )
+
+    jugador_guardado = (
+        jugadores.get(
+            clave_jugador,
+            {}
+        )
+    )
+
+    partidas_guardadas = (
+        jugador_guardado.get(
+            "partidas",
+            {}
+        )
+    )
+
+
+    # ========================================================
+    # OBTENER IDS RECIENTES
+    # ========================================================
+
+    partidas_ids = (
+        obtener_ids_partidas_por_puuid(
+            puuid=puuid,
+            region=region,
+            start=0,
+            count=count
+        )
     )
 
 
@@ -1029,19 +1286,16 @@ def obtener_estadisticas_ultimas_partidas(
 
 
     # ========================================================
-    # 3. PROCESAR PARTIDAS
+    # PROCESAR PARTIDAS
     # ========================================================
 
     for match_id in partidas_ids:
 
-        partida_guardada = partidas_guardadas.get(
-            match_id
+        partida_guardada = (
+            partidas_guardadas.get(
+                match_id
+            )
         )
-
-
-        # ----------------------------------------------------
-        # DETERMINAR SI EL CACHÉ YA TIENE LA NUEVA ESTRUCTURA
-        # ----------------------------------------------------
 
         cache_actualizado = (
             isinstance(
@@ -1053,11 +1307,6 @@ def obtener_estadisticas_ultimas_partidas(
             in partida_guardada
         )
 
-
-        # ----------------------------------------------------
-        # USAR CACHÉ ACTUALIZADO
-        # ----------------------------------------------------
-
         if cache_actualizado:
 
             resultados.append(
@@ -1066,10 +1315,6 @@ def obtener_estadisticas_ultimas_partidas(
 
             continue
 
-
-        # ----------------------------------------------------
-        # SI NO EXISTE O ES ANTIGUO, CONSULTAR RIOT
-        # ----------------------------------------------------
 
         try:
 
@@ -1082,7 +1327,8 @@ def obtener_estadisticas_ultimas_partidas(
 
             partida_completa = (
                 obtener_partida_por_id(
-                    match_id
+                    match_id=match_id,
+                    region=region
                 )
             )
 
@@ -1094,10 +1340,6 @@ def obtener_estadisticas_ultimas_partidas(
                 )
             )
 
-
-            # ------------------------------------------------
-            # ACTUALIZAR CACHÉ
-            # ------------------------------------------------
 
             partidas_guardadas[
                 match_id
@@ -1114,7 +1356,7 @@ def obtener_estadisticas_ultimas_partidas(
             datos_modificados = True
 
 
-        except RiotRateLimitException as e:
+        except RiotRateLimitException as error:
 
             resultados.append({
 
@@ -1122,16 +1364,16 @@ def obtener_estadisticas_ultimas_partidas(
                     match_id,
 
                 "error":
-                    e.mensaje,
+                    error.mensaje,
 
                 "retry_after":
-                    e.retry_after
+                    error.retry_after
             })
 
             break
 
 
-        except Exception as e:
+        except Exception as error:
 
             resultados.append({
 
@@ -1139,20 +1381,26 @@ def obtener_estadisticas_ultimas_partidas(
                     match_id,
 
                 "error":
-                    str(e)
+                    str(
+                        error
+                    )
             })
 
 
     # ========================================================
-    # 4. OBTENER NOMBRE Y TAG
+    # OBTENER NOMBRE Y TAG
     # ========================================================
 
-    nombre = jugador_guardado.get(
-        "nombre"
+    nombre = (
+        jugador_guardado.get(
+            "nombre"
+        )
     )
 
-    tag = jugador_guardado.get(
-        "tag"
+    tag = (
+        jugador_guardado.get(
+            "tag"
+        )
     )
 
 
@@ -1164,35 +1412,43 @@ def obtener_estadisticas_ultimas_partidas(
         ):
             continue
 
-        datos_jugador = partida.get(
-            "jugador"
+        datos_jugador = (
+            partida.get(
+                "jugador"
+            )
         )
 
         if not datos_jugador:
             continue
 
-
-        nombre = datos_jugador.get(
-            "nombre"
+        nombre = (
+            datos_jugador.get(
+                "nombre"
+            )
         )
 
-        tag = datos_jugador.get(
-            "tag"
+        tag = (
+            datos_jugador.get(
+                "tag"
+            )
         )
 
         break
 
 
     # ========================================================
-    # 5. ACTUALIZAR JUGADOR EN CACHÉ
+    # ACTUALIZAR CACHÉ
     # ========================================================
 
     jugadores[
-        puuid
+        clave_jugador
     ] = {
 
         "puuid":
             puuid,
+
+        "region":
+            region.upper(),
 
         "nombre":
             nombre,
@@ -1205,17 +1461,11 @@ def obtener_estadisticas_ultimas_partidas(
     }
 
 
-    # ========================================================
-    # 6. GUARDAR JSON
-    # ========================================================
-
     if (
         datos_modificados
         or
-        puuid not in datos.get(
-            "jugadores",
-            {}
-        )
+        clave_jugador
+        not in jugadores
     ):
 
         guardar_partidas_guardadas(
@@ -1224,15 +1474,9 @@ def obtener_estadisticas_ultimas_partidas(
 
     else:
 
-        # También guardamos para mantener metadatos
-        # del jugador sincronizados.
         guardar_partidas_guardadas(
             datos
         )
 
-
-    # ========================================================
-    # 7. RETORNAR RESULTADOS
-    # ========================================================
 
     return resultados

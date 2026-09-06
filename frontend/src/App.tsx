@@ -40,12 +40,11 @@ import Recommendations
 
 function App() {
 
-  // ============================================================
-  // ESTADOS
-  // ============================================================
-
   const [riotId, setRiotId] =
     useState("");
+
+  const [region, setRegion] =
+    useState("LAS");
 
   const [resultado, setResultado] =
     useState<AnalisisResponse | null>(
@@ -57,11 +56,6 @@ function App() {
 
   const [error, setError] =
     useState("");
-
-
-  // ============================================================
-  // ANALIZAR JUGADOR
-  // ============================================================
 
   const analizarRendimiento = async (
     event?: FormEvent
@@ -78,11 +72,6 @@ function App() {
 
     setResultado(null);
 
-
-    // ----------------------------------------------------------
-    // VALIDACIÓN: CAMPO VACÍO
-    // ----------------------------------------------------------
-
     if (!riotIdLimpio) {
 
       setError(
@@ -91,11 +80,6 @@ function App() {
 
       return;
     }
-
-
-    // ----------------------------------------------------------
-    // VALIDACIÓN: FORMATO NOMBRE#TAG
-    // ----------------------------------------------------------
 
     if (
       !riotIdLimpio.includes("#")
@@ -131,11 +115,6 @@ function App() {
       return;
     }
 
-
-    // ----------------------------------------------------------
-    // CONSUMIR BACKEND
-    // ----------------------------------------------------------
-
     try {
 
       setCargando(true);
@@ -143,7 +122,8 @@ function App() {
 
       const data =
         await analizarJugador(
-          riotIdLimpio
+          riotIdLimpio,
+          region
         );
 
 
@@ -194,6 +174,8 @@ function App() {
       <Navbar
         riotId={riotId}
         setRiotId={setRiotId}
+        region={region}
+        setRegion={setRegion}
         cargando={cargando}
         onAnalizar={
           analizarRendimiento

@@ -1,5 +1,6 @@
 export interface AnalisisRequest {
   riot_id: string;
+  region: string;
 }
 
 

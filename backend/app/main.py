@@ -9,13 +9,37 @@ from backend.app.services.riot_service import (
     obtener_partida_por_id,
     extraer_estadisticas_jugador,
     obtener_estadisticas_ultimas_partidas,
-    obtener_rango_jugador
+    obtener_rango_jugador,
 )
 
 from backend.app.services.analisis_service import (
     calcular_promedios,
-    analizar_jugador_con_referencia
+    analizar_jugador_con_referencia,
 )
+
+
+# ============================================================
+# REGIONES SOPORTADAS
+# ============================================================
+
+REGIONES_SOPORTADAS = {
+    "BR",
+    "LAN",
+    "LAS",
+    "NA",
+    "EUW",
+    "EUNE",
+    "TR",
+    "RU",
+    "KR",
+    "JP",
+    "OCE",
+    "PH",
+    "SG",
+    "TH",
+    "TW",
+    "VN",
+}
 
 
 # ============================================================
@@ -23,11 +47,20 @@ from backend.app.services.analisis_service import (
 # ============================================================
 
 class AnalisisJugadorRequest(BaseModel):
+
     riot_id: str = Field(
         ...,
         min_length=3,
         description="Riot ID del jugador en formato Nombre#TAG",
-        examples=["Faker#KR1"]
+        examples=["Faker#KR1"],
+    )
+
+    region: str = Field(
+        default="LAS",
+        min_length=2,
+        max_length=4,
+        description="Región/plataforma del jugador",
+        examples=["KR"],
     )
 
 
@@ -42,7 +75,7 @@ app = FastAPI(
         "de League of Legends y compararlo contra referencias "
         "profesionales obtenidas de Oracle's Elixir."
     ),
-    version="2.0.0"
+    version="2.1.0",
 )
 
 
@@ -55,18 +88,21 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
-        "https://rift-lens-eta.vercel.app"
+        "https://rift-lens-eta.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
+
 
 # ============================================================
 # FUNCIONES AUXILIARES
 # ============================================================
 
-def validar_riot_id(riot_id: str):
+def validar_riot_id(
+    riot_id: str,
+):
     """
     Valida un Riot ID y devuelve game_name y tag_line.
     """
@@ -76,10 +112,15 @@ def validar_riot_id(riot_id: str):
     if "#" not in riot_id:
         raise HTTPException(
             status_code=400,
-            detail="El Riot ID debe tener el formato Nombre#TAG."
+            detail=(
+                "El Riot ID debe tener el formato Nombre#TAG."
+            ),
         )
 
-    game_name, tag_line = riot_id.split("#", 1)
+    game_name, tag_line = riot_id.split(
+        "#",
+        1,
+    )
 
     game_name = game_name.strip()
     tag_line = tag_line.strip()
@@ -87,13 +128,43 @@ def validar_riot_id(riot_id: str):
     if not game_name or not tag_line:
         raise HTTPException(
             status_code=400,
-            detail="El Riot ID no puede contener campos vacíos."
+            detail=(
+                "El Riot ID no puede contener campos vacíos."
+            ),
         )
 
     return game_name, tag_line
 
 
-def manejar_rate_limit(error: RiotRateLimitException):
+def validar_region(
+    region: str,
+):
+    """
+    Valida y normaliza la región enviada por el cliente.
+    """
+
+    region_normalizada = (
+        region
+        .strip()
+        .upper()
+    )
+
+    if region_normalizada not in REGIONES_SOPORTADAS:
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                f"Región no soportada: {region}. "
+                f"Regiones disponibles: "
+                f"{', '.join(sorted(REGIONES_SOPORTADAS))}."
+            ),
+        )
+
+    return region_normalizada
+
+
+def manejar_rate_limit(
+    error: RiotRateLimitException,
+):
     """
     Convierte la excepción de rate limit de Riot
     en una respuesta HTTP 429.
@@ -103,13 +174,14 @@ def manejar_rate_limit(error: RiotRateLimitException):
 
     if error.retry_after:
         detail += (
-            f" Espera aproximadamente {error.retry_after} "
-            "segundos antes de volver a intentarlo."
+            f" Espera aproximadamente "
+            f"{error.retry_after} segundos "
+            f"antes de volver a intentarlo."
         )
 
     raise HTTPException(
         status_code=429,
-        detail=detail
+        detail=detail,
     )
 
 
@@ -119,15 +191,20 @@ def manejar_rate_limit(error: RiotRateLimitException):
 
 @app.get("/")
 def inicio():
+
     return {
         "mensaje": (
             "API del Sistema de Análisis de Rendimiento LOL "
             "funcionando correctamente"
         ),
-        "version": "2.0.0",
+        "version": "2.1.0",
         "modelo_analisis": (
             "Jugador individual vs referencia profesional por rol"
-        )
+        ),
+        "multirregion": True,
+        "regiones_soportadas": sorted(
+            REGIONES_SOPORTADAS
+        ),
     }
 
 
@@ -137,57 +214,85 @@ def inicio():
 
 @app.get("/api/jugador")
 def obtener_jugador(
+
     riot_id: str = Query(
         ...,
-        description="Riot ID en formato Nombre#TAG"
-    )
+        description=(
+            "Riot ID en formato Nombre#TAG"
+        ),
+    ),
+
+    region: str = Query(
+        "LAS",
+        description=(
+            "Región del jugador. "
+            "Ejemplo: LAS, LAN, NA, EUW, KR"
+        ),
+    ),
 ):
+
     try:
+
+        region = validar_region(
+            region
+        )
 
         game_name, tag_line = validar_riot_id(
             riot_id
         )
 
         cuenta = obtener_cuenta_por_riot_id(
-            game_name,
-            tag_line
+            game_name=game_name,
+            tag_line=tag_line,
+            region=region,
         )
 
-        puuid = cuenta.get("puuid")
+        puuid = cuenta.get(
+            "puuid"
+        )
 
         if not puuid:
             raise HTTPException(
                 status_code=404,
-                detail="No se pudo obtener el PUUID del jugador."
+                detail=(
+                    "No se pudo obtener el PUUID del jugador."
+                ),
             )
 
         return {
-            "mensaje": "Jugador encontrado correctamente",
+            "mensaje": (
+                "Jugador encontrado correctamente"
+            ),
             "riot_id": (
                 f"{cuenta.get('gameName', game_name)}"
                 f"#{cuenta.get('tagLine', tag_line)}"
             ),
+            "region": region,
             "puuid": puuid,
             "gameName": cuenta.get(
                 "gameName",
-                game_name
+                game_name,
             ),
             "tagLine": cuenta.get(
                 "tagLine",
-                tag_line
-            )
+                tag_line,
+            ),
         }
 
     except HTTPException:
         raise
 
-    except RiotRateLimitException as e:
-        manejar_rate_limit(e)
+    except RiotRateLimitException as error:
+        manejar_rate_limit(
+            error
+        )
 
-    except Exception as e:
+    except Exception as error:
         raise HTTPException(
             status_code=500,
-            detail=str(e)
+            detail=str(
+                error
+            ),
         )
 
 
@@ -197,41 +302,73 @@ def obtener_jugador(
 
 @app.get("/api/jugador/{puuid}/partidas")
 def obtener_partidas(
+
     puuid: str,
+
+    region: str = Query(
+        "LAS",
+        description="Región del jugador",
+    ),
+
     start: int = Query(
         0,
         ge=0,
-        description="Índice desde donde comenzar"
+        description=(
+            "Índice desde donde comenzar"
+        ),
     ),
+
     count: int = Query(
         20,
         ge=1,
         le=100,
-        description="Cantidad de partidas a obtener"
-    )
+        description=(
+            "Cantidad de partidas a obtener"
+        ),
+    ),
 ):
+
     try:
 
-        partidas = obtener_ids_partidas_por_puuid(
-            puuid=puuid,
-            start=start,
-            count=count
+        region = validar_region(
+            region
+        )
+
+        partidas = (
+            obtener_ids_partidas_por_puuid(
+                puuid=puuid,
+                region=region,
+                start=start,
+                count=count,
+            )
         )
 
         return {
-            "mensaje": "Partidas obtenidas correctamente",
+            "mensaje": (
+                "Partidas obtenidas correctamente"
+            ),
             "puuid": puuid,
-            "cantidad": len(partidas),
-            "partidas": partidas
+            "region": region,
+            "cantidad": len(
+                partidas
+            ),
+            "partidas": partidas,
         }
 
-    except RiotRateLimitException as e:
-        manejar_rate_limit(e)
+    except HTTPException:
+        raise
 
-    except Exception as e:
+    except RiotRateLimitException as error:
+        manejar_rate_limit(
+            error
+        )
+
+    except Exception as error:
         raise HTTPException(
             status_code=500,
-            detail=str(e)
+            detail=str(
+                error
+            ),
         )
 
 
@@ -240,25 +377,51 @@ def obtener_partidas(
 # ============================================================
 
 @app.get("/api/partida/{match_id}")
-def obtener_partida(match_id: str):
+def obtener_partida(
+
+    match_id: str,
+
+    region: str = Query(
+        "LAS",
+        description=(
+            "Región a la que pertenece la partida"
+        ),
+    ),
+):
+
     try:
 
+        region = validar_region(
+            region
+        )
+
         partida = obtener_partida_por_id(
-            match_id
+            match_id=match_id,
+            region=region,
         )
 
         return {
-            "mensaje": "Partida obtenida correctamente",
-            "partida": partida
+            "mensaje": (
+                "Partida obtenida correctamente"
+            ),
+            "region": region,
+            "partida": partida,
         }
 
-    except RiotRateLimitException as e:
-        manejar_rate_limit(e)
+    except HTTPException:
+        raise
 
-    except Exception as e:
+    except RiotRateLimitException as error:
+        manejar_rate_limit(
+            error
+        )
+
+    except Exception as error:
         raise HTTPException(
             status_code=500,
-            detail=str(e)
+            detail=str(
+                error
+            ),
         )
 
 
@@ -266,38 +429,65 @@ def obtener_partida(match_id: str):
 # OBTENER ESTADÍSTICAS DEL JUGADOR EN UNA PARTIDA
 # ============================================================
 
-@app.get("/api/partida/{match_id}/jugador/{puuid}")
+@app.get(
+    "/api/partida/{match_id}/jugador/{puuid}"
+)
 def obtener_estadisticas_jugador_partida(
+
     match_id: str,
-    puuid: str
+    puuid: str,
+
+    region: str = Query(
+        "LAS",
+        description=(
+            "Región a la que pertenece la partida"
+        ),
+    ),
 ):
+
     try:
 
-        partida = obtener_partida_por_id(
-            match_id
+        region = validar_region(
+            region
         )
 
-        estadisticas = extraer_estadisticas_jugador(
-            partida,
-            puuid
+        partida = obtener_partida_por_id(
+            match_id=match_id,
+            region=region,
+        )
+
+        estadisticas = (
+            extraer_estadisticas_jugador(
+                partida,
+                puuid,
+            )
         )
 
         return {
             "mensaje": (
-                "Estadísticas del jugador obtenidas correctamente"
+                "Estadísticas del jugador "
+                "obtenidas correctamente"
             ),
             "match_id": match_id,
             "puuid": puuid,
-            "estadisticas": estadisticas
+            "region": region,
+            "estadisticas": estadisticas,
         }
 
-    except RiotRateLimitException as e:
-        manejar_rate_limit(e)
+    except HTTPException:
+        raise
 
-    except Exception as e:
+    except RiotRateLimitException as error:
+        manejar_rate_limit(
+            error
+        )
+
+    except Exception as error:
         raise HTTPException(
             status_code=500,
-            detail=str(e)
+            detail=str(
+                error
+            ),
         )
 
 
@@ -307,20 +497,37 @@ def obtener_estadisticas_jugador_partida(
 
 @app.get("/api/jugador/{puuid}/estadisticas")
 def obtener_estadisticas(
+
     puuid: str,
+
+    region: str = Query(
+        "LAS",
+        description=(
+            "Región del jugador"
+        ),
+    ),
+
     count: int = Query(
         100,
         ge=1,
         le=100,
-        description="Cantidad de partidas a procesar"
-    )
+        description=(
+            "Cantidad de partidas a procesar"
+        ),
+    ),
 ):
+
     try:
+
+        region = validar_region(
+            region
+        )
 
         estadisticas = (
             obtener_estadisticas_ultimas_partidas(
                 puuid=puuid,
-                count=count
+                region=region,
+                count=count,
             )
         )
 
@@ -329,17 +536,27 @@ def obtener_estadisticas(
                 "Estadísticas obtenidas correctamente"
             ),
             "puuid": puuid,
-            "cantidad": len(estadisticas),
-            "partidas": estadisticas
+            "region": region,
+            "cantidad": len(
+                estadisticas
+            ),
+            "partidas": estadisticas,
         }
 
-    except RiotRateLimitException as e:
-        manejar_rate_limit(e)
+    except HTTPException:
+        raise
 
-    except Exception as e:
+    except RiotRateLimitException as error:
+        manejar_rate_limit(
+            error
+        )
+
+    except Exception as error:
         raise HTTPException(
             status_code=500,
-            detail=str(e)
+            detail=str(
+                error
+            ),
         )
 
 
@@ -349,13 +566,24 @@ def obtener_estadisticas(
 
 @app.get("/api/jugador/{puuid}/promedios")
 def obtener_promedios_jugador(
+
     puuid: str,
+
+    region: str = Query(
+        "LAS",
+        description=(
+            "Región del jugador"
+        ),
+    ),
+
     count: int = Query(
         100,
         ge=1,
         le=100,
-        description="Cantidad de partidas a analizar"
-    )
+        description=(
+            "Cantidad de partidas a analizar"
+        ),
+    ),
 ):
     """
     Endpoint auxiliar.
@@ -363,17 +591,31 @@ def obtener_promedios_jugador(
     Calcula promedios generales de todas las partidas
     independientemente del rol.
 
-    No realiza todavía la comparación profesional.
+    No realiza la comparación profesional.
     """
 
     try:
 
+        region = validar_region(
+            region
+        )
+
         partidas = (
             obtener_estadisticas_ultimas_partidas(
                 puuid=puuid,
-                count=count
+                region=region,
+                count=count,
             )
         )
+
+        if not partidas:
+            raise HTTPException(
+                status_code=404,
+                detail=(
+                    "No se encontraron partidas "
+                    "para calcular los promedios."
+                ),
+            )
 
         promedios = calcular_promedios(
             partidas
@@ -384,46 +626,71 @@ def obtener_promedios_jugador(
                 "Promedios calculados correctamente"
             ),
             "puuid": puuid,
-            "promedios": promedios
+            "region": region,
+            "promedios": promedios,
         }
 
-    except RiotRateLimitException as e:
-        manejar_rate_limit(e)
+    except HTTPException:
+        raise
 
-    except Exception as e:
+    except RiotRateLimitException as error:
+        manejar_rate_limit(
+            error
+        )
+
+    except Exception as error:
         raise HTTPException(
             status_code=500,
-            detail=str(e)
+            detail=str(
+                error
+            ),
         )
 
 
 # ============================================================
-# ANALIZAR JUGADOR POR PUUID CONTRA REFERENCIA PROFESIONAL
+# ANALIZAR JUGADOR POR PUUID
 # ============================================================
 
 @app.get("/api/jugador/{puuid}/analisis")
 def analizar_rendimiento_por_puuid(
+
     puuid: str,
+
+    region: str = Query(
+        "LAS",
+        description=(
+            "Región del jugador"
+        ),
+    ),
+
     count: int = Query(
         100,
         ge=1,
         le=100,
-        description="Cantidad de partidas recientes a evaluar"
-    )
+        description=(
+            "Cantidad de partidas recientes a evaluar"
+        ),
+    ),
 ):
     """
-    Ejecuta la nueva lógica de análisis utilizando directamente
+    Ejecuta el análisis utilizando directamente
     el PUUID.
 
-    Es útil para pruebas internas desde Swagger.
+    Este endpoint es útil para pruebas internas
+    desde Swagger.
     """
 
     try:
 
+        region = validar_region(
+            region
+        )
+
         partidas = (
             obtener_estadisticas_ultimas_partidas(
                 puuid=puuid,
-                count=count
+                region=region,
+                count=count,
             )
         )
 
@@ -433,12 +700,14 @@ def analizar_rendimiento_por_puuid(
                 detail=(
                     "No se encontraron partidas "
                     "para realizar el análisis."
-                )
+                ),
             )
 
-        analisis = analizar_jugador_con_referencia(
-            partidas=partidas,
-            puuid=puuid
+        analisis = (
+            analizar_jugador_con_referencia(
+                partidas=partidas,
+                puuid=puuid,
+            )
         )
 
         return {
@@ -446,48 +715,60 @@ def analizar_rendimiento_por_puuid(
                 "Análisis contra referencia profesional "
                 "realizado correctamente"
             ),
-            "analisis": analisis
+            "puuid": puuid,
+            "region": region,
+            "analisis": analisis,
         }
 
     except HTTPException:
         raise
 
-    except RiotRateLimitException as e:
-        manejar_rate_limit(e)
+    except RiotRateLimitException as error:
+        manejar_rate_limit(
+            error
+        )
 
-    except Exception as e:
+    except Exception as error:
         raise HTTPException(
             status_code=500,
-            detail=str(e)
+            detail=str(
+                error
+            ),
         )
 
 
 # ============================================================
-# NUEVO ENDPOINT PRINCIPAL DE ANÁLISIS
+# ENDPOINT PRINCIPAL DE ANÁLISIS
 # ============================================================
 
 @app.post("/api/analisis")
 def analizar_jugador(
-    solicitud: AnalisisJugadorRequest
+    solicitud: AnalisisJugadorRequest,
 ):
 
     try:
 
-        # ----------------------------------------------------
-        # VALIDAR RIOT ID
-        # ----------------------------------------------------
+        # ====================================================
+        # VALIDAR DATOS
+        # ====================================================
 
         game_name, tag_line = validar_riot_id(
             solicitud.riot_id
         )
 
-        # ----------------------------------------------------
+        region = validar_region(
+            solicitud.region
+        )
+
+
+        # ====================================================
         # OBTENER CUENTA RIOT
-        # ----------------------------------------------------
+        # ====================================================
 
         cuenta = obtener_cuenta_por_riot_id(
-            game_name,
-            tag_line
+            game_name=game_name,
+            tag_line=tag_line,
+            region=region,
         )
 
         puuid = cuenta.get(
@@ -500,79 +781,123 @@ def analizar_jugador(
                 detail=(
                     "No se pudo obtener el PUUID "
                     "del jugador."
-                )
+                ),
             )
+
+
+        # ====================================================
+        # DATOS DEL JUGADOR
+        # ====================================================
 
         nombre = cuenta.get(
             "gameName",
-            game_name
+            game_name,
         )
 
         tag = cuenta.get(
             "tagLine",
-            tag_line
+            tag_line,
         )
 
+
+        # ====================================================
+        # OBTENER RANGO
+        # ====================================================
 
         rango = obtener_rango_jugador(
-            puuid=puuid
+            puuid=puuid,
+            region=region,
         )
 
-        # ----------------------------------------------------
+
+        # ====================================================
         # OBTENER ÚLTIMAS 100 PARTIDAS
-        # ----------------------------------------------------
+        # ====================================================
 
         partidas = (
             obtener_estadisticas_ultimas_partidas(
                 puuid=puuid,
-                count=100
+                region=region,
+                count=100,
             )
         )
 
-        if not partidas:
+
+        # ====================================================
+        # VALIDAR PARTIDAS
+        # ====================================================
+
+        partidas_validas = [
+            partida
+            for partida in partidas
+            if (
+                isinstance(
+                    partida,
+                    dict,
+                )
+                and
+                "error" not in partida
+                and
+                partida.get(
+                    "partida"
+                )
+            )
+        ]
+
+        if not partidas_validas:
             raise HTTPException(
                 status_code=404,
                 detail=(
                     "No se encontraron partidas recientes "
-                    "para este jugador."
-                )
+                    "válidas para este jugador."
+                ),
             )
 
-        # ----------------------------------------------------
+
+        # ====================================================
         # EJECUTAR ANÁLISIS COMPLETO
-        # ----------------------------------------------------
+        # ====================================================
 
         analisis = (
             analizar_jugador_con_referencia(
-                partidas=partidas,
+                partidas=partidas_validas,
                 puuid=puuid,
                 nombre=nombre,
                 tag=tag,
-                rango=rango
+                rango=rango,
             )
         )
 
-        # ----------------------------------------------------
+
+        # ====================================================
         # RESPUESTA
-        # ----------------------------------------------------
+        # ====================================================
 
         return {
             "mensaje": (
                 "Análisis de rendimiento realizado "
                 "correctamente"
             ),
-            "riot_id": f"{nombre}#{tag}",
-            "analisis": analisis
+            "riot_id": (
+                f"{nombre}#{tag}"
+            ),
+            "region": region,
+            "analisis": analisis,
         }
+
 
     except HTTPException:
         raise
 
-    except RiotRateLimitException as e:
-        manejar_rate_limit(e)
+    except RiotRateLimitException as error:
+        manejar_rate_limit(
+            error
+        )
 
-    except Exception as e:
+    except Exception as error:
         raise HTTPException(
             status_code=500,
-            detail=str(e)
+            detail=str(
+                error
+            ),
         )
