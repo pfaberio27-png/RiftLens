@@ -1,3 +1,8 @@
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import type {
   AnalisisResponse,
 } from "../types/analisis";
@@ -20,11 +25,81 @@ function RoleMatchups({
   partidas,
 }: RoleMatchupsProps) {
 
+  const PARTIDAS_POR_PAGINA = 10;
+
+  const [
+    paginaActual,
+    setPaginaActual,
+  ] = useState(0);
+
+
   const partidasConRival =
     partidas.filter(
       (partida) =>
         partida.rival_rol !== null
     );
+
+
+  useEffect(() => {
+    setPaginaActual(0);
+  }, [partidas]);
+
+
+  const totalPartidas =
+    partidasConRival.length;
+
+
+  const totalPaginas =
+    Math.ceil(
+      totalPartidas /
+      PARTIDAS_POR_PAGINA
+    );
+
+
+  const inicio =
+    paginaActual *
+    PARTIDAS_POR_PAGINA;
+
+
+  const fin =
+    Math.min(
+      inicio +
+        PARTIDAS_POR_PAGINA,
+      totalPartidas
+    );
+
+
+  const partidasVisibles =
+    partidasConRival.slice(
+      inicio,
+      fin
+    );
+
+
+  const irAnterior = () => {
+
+    setPaginaActual(
+      (pagina) =>
+        Math.max(
+          pagina - 1,
+          0
+        )
+    );
+
+  };
+
+
+  const irSiguiente = () => {
+
+    setPaginaActual(
+      (pagina) =>
+        Math.min(
+          pagina + 1,
+          totalPaginas - 1
+        )
+    );
+
+  };
 
 
   return (
@@ -59,7 +134,7 @@ function RoleMatchups({
       <div className="matchup-list">
 
         {
-          partidasConRival.map(
+          partidasVisibles.map(
             (
               partida,
               index
@@ -79,7 +154,7 @@ function RoleMatchups({
                 <article
                   key={
                     partida.match_id ??
-                    index
+                    `${paginaActual}-${index}`
                   }
                   className={
                     partida.victoria
@@ -88,10 +163,6 @@ function RoleMatchups({
                   }
                 >
 
-
-                  {/* ============================================
-                      ROL
-                  ============================================ */}
 
                   <div className="matchup-role">
 
@@ -109,10 +180,6 @@ function RoleMatchups({
 
                   </div>
 
-
-                  {/* ============================================
-                      JUGADOR
-                  ============================================ */}
 
                   <div className="matchup-player">
 
@@ -191,11 +258,6 @@ function RoleMatchups({
                     </div>
 
                   </div>
-
-
-                  {/* ============================================
-                      VS
-                  ============================================ */}
 
                   <div className="matchup-vs">
 
@@ -290,11 +352,6 @@ function RoleMatchups({
 
                   </div>
 
-
-                  {/* ============================================
-                      RESULTADO
-                  ============================================ */}
-
                   <div
                     className={
                       partida.victoria
@@ -339,7 +396,7 @@ function RoleMatchups({
 
 
         {
-          partidasConRival.length === 0 && (
+          totalPartidas === 0 && (
 
             <div className="matchup-empty">
 
@@ -353,6 +410,72 @@ function RoleMatchups({
         }
 
       </div>
+
+
+      {
+        totalPartidas > 0 && (
+
+          <div className="matches-pagination">
+
+            {
+              totalPaginas > 1 && (
+
+                <div className="matches-pagination-buttons">
+
+                  <button
+                    type="button"
+                    className="pagination-button"
+                    onClick={
+                      irAnterior
+                    }
+                    disabled={
+                      paginaActual === 0
+                    }
+                  >
+                    ← Anterior
+                  </button>
+
+
+                  <span className="pagination-page">
+
+                    Página{" "}
+
+                    <strong>
+                      {paginaActual + 1}
+                    </strong>
+
+                    {" de "}
+
+                    <strong>
+                      {totalPaginas}
+                    </strong>
+
+                  </span>
+
+
+                  <button
+                    type="button"
+                    className="pagination-button"
+                    onClick={
+                      irSiguiente
+                    }
+                    disabled={
+                      paginaActual >=
+                      totalPaginas - 1
+                    }
+                  >
+                    Siguiente →
+                  </button>
+
+                </div>
+
+              )
+            }
+
+          </div>
+
+        )
+      }
 
 
     </section>

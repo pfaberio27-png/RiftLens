@@ -1201,14 +1201,14 @@ def analizar_jugador_con_referencia(
         estadisticas_campeon_insignia = None
 
 
-        # ========================================================
+    # ========================================================
     # PARTIDAS RECIENTES PARA EL FRONTEND
     # ========================================================
 
     partidas_recientes = []
 
 
-    for partida in partidas_validas[:10]:
+    for partida in partidas_validas:
 
         # ----------------------------------------------------
         # BLOQUES PRINCIPALES
@@ -1575,9 +1575,11 @@ def analizar_jugador_con_referencia(
     # FORMA RECIENTE
     # ========================================================
 
+    partidas_forma_reciente = partidas_recientes[:10]
+    
     forma_reciente = []
 
-    for partida in partidas_recientes:
+    for partida in partidas_recientes[:10]:
 
         forma_reciente.append(
             "V"
@@ -1757,7 +1759,7 @@ def analizar_jugador_con_referencia(
                 derrotas_recientes,
 
             "cantidad":
-                len(partidas_recientes)
+                len(partidas_forma_reciente)
         },
 
 

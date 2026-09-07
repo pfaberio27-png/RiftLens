@@ -148,6 +148,138 @@ h3 {
 }
 
 /* =========================================================
+   PAGINACIÓN DE PARTIDAS
+   ========================================================= */
+
+.matches-pagination {
+  margin-top: 26px;
+
+  padding-top: 18px;
+
+  border-top:
+    1px solid
+    rgba(200, 170, 110, 0.14);
+}
+
+.matches-pagination-info {
+  margin-bottom: 14px;
+
+  color: var(--text-dim);
+
+  font-size: 13px;
+  text-align: center;
+}
+
+.matches-pagination-info strong {
+  color: var(--gold-bright);
+  font-weight: 600;
+}
+
+.matches-pagination-buttons {
+  display: grid;
+
+  grid-template-columns:
+    160px 1fr 160px;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+.pagination-button {
+  height: 42px;
+
+  padding: 0 18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(22, 31, 42, 0.98),
+      rgba(15, 23, 32, 0.98)
+    );
+
+  color: var(--gold-bright);
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.38);
+
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 0.04em;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+  border-color: var(--gold);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(29, 40, 54, 1),
+      rgba(18, 27, 38, 1)
+    );
+
+  box-shadow:
+    0 0 14px
+    rgba(200, 170, 110, 0.12);
+
+  transform:
+    translateY(-1px);
+}
+
+.pagination-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pagination-page {
+  color: var(--text-dim);
+
+  font-size: 12px;
+
+  text-align: center;
+
+  letter-spacing: 0.04em;
+}
+
+.pagination-page strong {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+
+@media (max-width: 650px) {
+
+  .matches-pagination-buttons {
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .pagination-page {
+    grid-column:
+      1 / -1;
+
+    grid-row: 1;
+  }
+
+  .pagination-button {
+    width: 100%;
+  }
+
+}
+
+/* =========================================================
    SELECT DE REGIÓN
    ========================================================= */
 
@@ -375,27 +507,6 @@ h3 {
 .comparison-difference strong {
   font-size: 13px;
   font-weight: 700;
-}
-
-
-/* SUPERIOR A LA REFERENCIA */
-
-.metrica-superior {
-  color: var(--cyan);
-}
-
-
-/* INFERIOR A LA REFERENCIA */
-
-.metrica-inferior {
-  color: var(--defeat);
-}
-
-
-/* SIMILAR A LA REFERENCIA */
-
-.metrica-similar {
-  color: var(--gold);
 }
 
 /* ============================================================
@@ -977,14 +1088,51 @@ h3 {
 
 .match-strip {
   display: flex;
-
   gap: 16px;
 
   overflow-x: auto;
+  overflow-y: hidden;
 
-  padding-bottom: 8px;
+  padding-bottom: 10px;
 
+  scroll-behavior: smooth;
   scrollbar-width: thin;
+  scrollbar-color:
+    rgba(200, 170, 110, 0.72)
+    rgba(15, 23, 32, 0.92);
+}
+
+.match-strip::-webkit-scrollbar {
+  height: 8px;
+}
+
+.match-strip::-webkit-scrollbar-track {
+  background: rgba(15, 23, 32, 0.92);
+  border: 1px solid rgba(200, 170, 110, 0.08);
+  border-radius: 999px;
+}
+
+.match-strip::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    90deg,
+    rgba(138, 117, 72, 0.9),
+    rgba(200, 170, 110, 0.95)
+  );
+
+  border: 2px solid rgba(15, 23, 32, 0.92);
+  border-radius: 999px;
+}
+
+.match-strip::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(200, 170, 110, 1),
+    rgba(240, 230, 210, 0.95)
+  );
+}
+
+.match-strip::-webkit-scrollbar-button {
+  display: none;
 }
 
 
@@ -1527,29 +1675,46 @@ h3 {
 
 
 /* ============================================================
-   SCROLLBAR
+   SCROLLBAR GLOBAL
 ============================================================ */
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color:
+    rgba(200, 170, 110, 0.58)
+    #090d14;
+}
 
 ::-webkit-scrollbar {
   width: 10px;
   height: 8px;
 }
 
-
 ::-webkit-scrollbar-track {
   background: #090d14;
 }
 
-
 ::-webkit-scrollbar-thumb {
-  background: #3a3d42;
+  background: linear-gradient(
+    180deg,
+    rgba(138, 117, 72, 0.88),
+    rgba(200, 170, 110, 0.82)
+  );
 
-  border-radius: 4px;
+  border: 2px solid #090d14;
+  border-radius: 999px;
 }
 
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #5a5d62;
+  background: linear-gradient(
+    180deg,
+    rgba(200, 170, 110, 0.98),
+    rgba(240, 230, 210, 0.88)
+  );
+}
+
+::-webkit-scrollbar-corner {
+  background: #090d14;
 }
 
 

@@ -1,3 +1,8 @@
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import type {
   AnalisisResponse,
 } from "../types/analisis";
@@ -19,6 +24,76 @@ interface RecentMatchesProps {
 function RecentMatches({
   partidas,
 }: RecentMatchesProps) {
+
+  const PARTIDAS_POR_PAGINA = 10;
+
+  const [
+    paginaActual,
+    setPaginaActual,
+  ] = useState(0);
+
+
+  useEffect(() => {
+    setPaginaActual(0);
+  }, [partidas]);
+
+
+  const totalPartidas =
+    partidas.length;
+
+
+  const totalPaginas =
+    Math.ceil(
+      totalPartidas /
+      PARTIDAS_POR_PAGINA
+    );
+
+
+  const inicio =
+    paginaActual *
+    PARTIDAS_POR_PAGINA;
+
+
+  const fin =
+    Math.min(
+      inicio +
+        PARTIDAS_POR_PAGINA,
+      totalPartidas
+    );
+
+
+  const partidasVisibles =
+    partidas.slice(
+      inicio,
+      fin
+    );
+
+
+  const irAnterior = () => {
+
+    setPaginaActual(
+      (pagina) =>
+        Math.max(
+          pagina - 1,
+          0
+        )
+    );
+
+  };
+
+
+  const irSiguiente = () => {
+
+    setPaginaActual(
+      (pagina) =>
+        Math.min(
+          pagina + 1,
+          totalPaginas - 1
+        )
+    );
+
+  };
+
 
   return (
 
@@ -47,7 +122,7 @@ function RecentMatches({
       <div className="match-strip">
 
         {
-          partidas.map(
+          partidasVisibles.map(
             (
               partida,
               index
@@ -56,7 +131,7 @@ function RecentMatches({
               <article
                 key={
                   partida.match_id ??
-                  index
+                  `${paginaActual}-${index}`
                 }
                 className={
                   partida.victoria
@@ -171,6 +246,61 @@ function RecentMatches({
         }
 
       </div>
+
+
+      {
+        totalPartidas > 0 && (
+
+          <div className="matches-pagination">
+
+            {
+              totalPaginas > 1 && (
+
+                <div className="matches-pagination-buttons">
+
+                  <button
+                    type="button"
+                    className="pagination-button"
+                    onClick={
+                      irAnterior
+                    }
+                    disabled={
+                      paginaActual === 0
+                    }
+                  >
+                    ← Anterior
+                  </button>
+
+
+                  <span className="pagination-page">
+
+
+                  </span>
+
+
+                  <button
+                    type="button"
+                    className="pagination-button"
+                    onClick={
+                      irSiguiente
+                    }
+                    disabled={
+                      paginaActual >=
+                      totalPaginas - 1
+                    }
+                  >
+                    Siguiente →
+                  </button>
+
+                </div>
+
+              )
+            }
+
+          </div>
+
+        )
+      }
 
 
     </section>
