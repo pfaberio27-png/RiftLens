@@ -9,6 +9,10 @@ import {
   analizarJugador,
 } from "./services/analisisService";
 
+import Toast, {
+  type ToastTipo,
+} from "./components/Toast";
+
 import type {
   AnalisisResponse,
 } from "./types/analisis";
@@ -54,8 +58,45 @@ function App() {
   const [cargando, setCargando] =
     useState(false);
 
-  const [error, setError] =
+
+  // ============================================================
+  // TOAST
+  // ============================================================
+
+  const [
+    toastMensaje,
+    setToastMensaje,
+  ] =
     useState("");
+
+  const [
+    toastTipo,
+    setToastTipo,
+  ] =
+    useState<ToastTipo>(
+      "success"
+    );
+
+
+  const mostrarToast = (
+    mensaje: string,
+    tipo: ToastTipo
+  ) => {
+
+    setToastMensaje(
+      mensaje
+    );
+
+    setToastTipo(
+      tipo
+    );
+
+  };
+
+
+  // ============================================================
+  // ANALIZAR JUGADOR
+  // ============================================================
 
   const analizarRendimiento = async (
     event?: FormEvent
@@ -68,25 +109,41 @@ function App() {
       riotId.trim();
 
 
-    setError("");
+    setResultado(
+      null
+    );
 
-    setResultado(null);
+    setToastMensaje(
+      ""
+    );
+
+
+    // ==========================================================
+    // VALIDAR RIOT ID VACÍO
+    // ==========================================================
 
     if (!riotIdLimpio) {
 
-      setError(
-        "Ingresa un Riot ID."
+      mostrarToast(
+        "Ingresa un Riot ID.",
+        "error"
       );
 
       return;
     }
 
+
+    // ==========================================================
+    // VALIDAR FORMATO #
+    // ==========================================================
+
     if (
       !riotIdLimpio.includes("#")
     ) {
 
-      setError(
-        "El Riot ID debe tener el formato Nombre#TAG."
+      mostrarToast(
+        "El Riot ID debe tener el formato Nombre#TAG.",
+        "error"
       );
 
       return;
@@ -103,21 +160,33 @@ function App() {
       );
 
 
+    // ==========================================================
+    // VALIDAR NOMBRE Y TAG
+    // ==========================================================
+
     if (
       !nombre?.trim() ||
       !tag?.trim()
     ) {
 
-      setError(
-        "El Riot ID debe tener el formato Nombre#TAG."
+      mostrarToast(
+        "El Riot ID debe tener el formato Nombre#TAG.",
+        "error"
       );
 
       return;
     }
 
+
+    // ==========================================================
+    // CONSULTAR BACKEND
+    // ==========================================================
+
     try {
 
-      setCargando(true);
+      setCargando(
+        true
+      );
 
 
       const data =
@@ -131,12 +200,23 @@ function App() {
         data
       );
 
+
+      mostrarToast(
+        `${data.riot_id} fue analizado correctamente en ${region}.`,
+        "success"
+      );
+
     } catch (error) {
 
-      setError(
+      const mensaje =
         error instanceof Error
           ? error.message
-          : "Ocurrió un error inesperado."
+          : "Ocurrió un error inesperado.";
+
+
+      mostrarToast(
+        mensaje,
+        "error"
       );
 
     } finally {
@@ -181,6 +261,29 @@ function App() {
           analizarRendimiento
         }
       />
+
+
+      {/* ========================================================
+          TOAST FLOTANTE
+      ======================================================== */}
+
+      {
+        toastMensaje && (
+
+          <Toast
+            mensaje={
+              toastMensaje
+            }
+            tipo={
+              toastTipo
+            }
+            onCerrar={() =>
+              setToastMensaje("")
+            }
+          />
+
+        )
+      }
 
 
       <main className="container">
@@ -233,27 +336,6 @@ function App() {
 
 
             </section>
-
-          )
-        }
-
-
-        {/* ======================================================
-            ERROR
-        ====================================================== */}
-
-        {
-          error && (
-
-            <div className="error">
-
-              <span>
-                ⚠
-              </span>
-
-              {error}
-
-            </div>
 
           )
         }

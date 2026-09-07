@@ -10,6 +10,7 @@ from backend.app.services.riot_service import (
     extraer_estadisticas_jugador,
     obtener_estadisticas_ultimas_partidas,
     obtener_rango_jugador,
+    validar_jugador_en_region,
 )
 
 from backend.app.services.analisis_service import (
@@ -776,11 +777,33 @@ def analizar_jugador(
         )
 
         if not puuid:
+
             raise HTTPException(
                 status_code=404,
                 detail=(
                     "No se pudo obtener el PUUID "
                     "del jugador."
+                ),
+            )
+
+
+        # ====================================================
+        # VALIDAR PLATAFORMA DEL JUGADOR
+        # ====================================================
+
+        jugador_en_region = validar_jugador_en_region(
+            puuid=puuid,
+            region=region,
+        )
+
+        if not jugador_en_region:
+
+            raise HTTPException(
+                status_code=404,
+                detail=(
+                    f" El jugador "
+                    f"no pertenece a la región {region}. "
+                    "Selecciona la región correcta."
                 ),
             )
 
@@ -845,6 +868,7 @@ def analizar_jugador(
         ]
 
         if not partidas_validas:
+
             raise HTTPException(
                 status_code=404,
                 detail=(
@@ -868,11 +892,6 @@ def analizar_jugador(
             )
         )
 
-
-        # ====================================================
-        # RESPUESTA
-        # ====================================================
-
         return {
             "mensaje": (
                 "Análisis de rendimiento realizado "
@@ -887,14 +906,19 @@ def analizar_jugador(
 
 
     except HTTPException:
+
         raise
 
+
     except RiotRateLimitException as error:
+
         manejar_rate_limit(
             error
         )
 
+
     except Exception as error:
+
         raise HTTPException(
             status_code=500,
             detail=str(

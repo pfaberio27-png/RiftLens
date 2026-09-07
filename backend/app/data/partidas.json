@@ -21756,6 +21756,148 @@
                             "victoria": false
                         }
                     }
+                },
+                "LA2_1622460239": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 200
+                    },
+                    "partida": {
+                        "match_id": "LA2_1622460239",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "JUNGLE",
+                        "duracion_segundos": 1569,
+                        "duracion_minutos": 26.15,
+                        "game_creation": 1788744210691,
+                        "game_end_timestamp": 1788745878561
+                    },
+                    "resultado": {
+                        "victoria": false
+                    },
+                    "campeon": {
+                        "id": 75,
+                        "nombre": "Nasus",
+                        "nivel": 14
+                    },
+                    "combate": {
+                        "kills": 9,
+                        "muertes": 5,
+                        "asistencias": 2,
+                        "kda": 2.2
+                    },
+                    "farmeo": {
+                        "cs": 171,
+                        "cs_por_minuto": 6.54
+                    },
+                    "economia": {
+                        "oro": 13552,
+                        "oro_por_minuto": 518.24
+                    },
+                    "daño": {
+                        "daño_campeones": 21753,
+                        "daño_por_minuto": 831.85
+                    },
+                    "vision": {
+                        "vision_score": 20,
+                        "wards_colocados": 2,
+                        "wards_eliminados": 3,
+                        "control_wards": 2
+                    },
+                    "rival_rol": {
+                        "puuid": "ZEXLo83_wxpQ5X7fbsa5LE61x20NG1RqQVpkzo29UV25ivZSZE9ey-uG6nx_FJaMzWbQq6PJmdsg_A",
+                        "nombre": "SeRaV",
+                        "tag": "LAS",
+                        "team_id": 100,
+                        "posicion": "JUNGLE",
+                        "campeon": {
+                            "id": 5,
+                            "nombre": "XinZhao",
+                            "nivel": 15
+                        },
+                        "combate": {
+                            "kills": 5,
+                            "muertes": 2,
+                            "asistencias": 14,
+                            "kda": 9.5
+                        },
+                        "resultado": {
+                            "victoria": true
+                        }
+                    }
+                },
+                "LA2_1622394431": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1622394431",
+                        "modo": "CLASSIC",
+                        "queue_id": 420,
+                        "posicion": "TOP",
+                        "duracion_segundos": 2009,
+                        "duracion_minutos": 33.48,
+                        "game_creation": 1788731837148,
+                        "game_end_timestamp": 1788733866126
+                    },
+                    "resultado": {
+                        "victoria": false
+                    },
+                    "campeon": {
+                        "id": 897,
+                        "nombre": "KSante",
+                        "nivel": 18
+                    },
+                    "combate": {
+                        "kills": 6,
+                        "muertes": 8,
+                        "asistencias": 5,
+                        "kda": 1.38
+                    },
+                    "farmeo": {
+                        "cs": 244,
+                        "cs_por_minuto": 7.29
+                    },
+                    "economia": {
+                        "oro": 14083,
+                        "oro_por_minuto": 420.6
+                    },
+                    "daño": {
+                        "daño_campeones": 29583,
+                        "daño_por_minuto": 883.51
+                    },
+                    "vision": {
+                        "vision_score": 29,
+                        "wards_colocados": 12,
+                        "wards_eliminados": 1,
+                        "control_wards": 2
+                    },
+                    "rival_rol": {
+                        "puuid": "phCdfNJJstAZm7Z5VcVH9ntRvdNKPhJU7Eqkm0OWaw3Dpak6Tnz77BkHyKnhDCxWeiSu4VdTwTnvxA",
+                        "nombre": "ChainSumeragi",
+                        "tag": "Chain",
+                        "team_id": 200,
+                        "posicion": "TOP",
+                        "campeon": {
+                            "id": 27,
+                            "nombre": "Singed",
+                            "nivel": 20
+                        },
+                        "combate": {
+                            "kills": 5,
+                            "muertes": 5,
+                            "asistencias": 10,
+                            "kda": 3.0
+                        },
+                        "resultado": {
+                            "victoria": true
+                        }
+                    }
                 }
             }
         },
@@ -28859,6 +29001,1732 @@
                             "muertes": 10,
                             "asistencias": 6,
                             "kda": 1.2
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                }
+            }
+        },
+        "TR:iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA": {
+            "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+            "region": "TR",
+            "nombre": null,
+            "tag": null,
+            "partidas": {}
+        },
+        "EUW:iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA": {
+            "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+            "region": "EUW",
+            "nombre": null,
+            "tag": null,
+            "partidas": {}
+        },
+        "LAN:iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA": {
+            "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+            "region": "LAN",
+            "nombre": "PichonAngel",
+            "tag": "EZZZ",
+            "partidas": {
+                "LA2_1622460239": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 200
+                    },
+                    "partida": {
+                        "match_id": "LA2_1622460239",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "JUNGLE",
+                        "duracion_segundos": 1569,
+                        "duracion_minutos": 26.15,
+                        "game_creation": 1788744210691,
+                        "game_end_timestamp": 1788745878561
+                    },
+                    "resultado": {
+                        "victoria": false
+                    },
+                    "campeon": {
+                        "id": 75,
+                        "nombre": "Nasus",
+                        "nivel": 14
+                    },
+                    "combate": {
+                        "kills": 9,
+                        "muertes": 5,
+                        "asistencias": 2,
+                        "kda": 2.2
+                    },
+                    "farmeo": {
+                        "cs": 171,
+                        "cs_por_minuto": 6.54
+                    },
+                    "economia": {
+                        "oro": 13552,
+                        "oro_por_minuto": 518.24
+                    },
+                    "daño": {
+                        "daño_campeones": 21753,
+                        "daño_por_minuto": 831.85
+                    },
+                    "vision": {
+                        "vision_score": 20,
+                        "wards_colocados": 2,
+                        "wards_eliminados": 3,
+                        "control_wards": 2
+                    },
+                    "rival_rol": {
+                        "puuid": "ZEXLo83_wxpQ5X7fbsa5LE61x20NG1RqQVpkzo29UV25ivZSZE9ey-uG6nx_FJaMzWbQq6PJmdsg_A",
+                        "nombre": "SeRaV",
+                        "tag": "LAS",
+                        "team_id": 100,
+                        "posicion": "JUNGLE",
+                        "campeon": {
+                            "id": 5,
+                            "nombre": "XinZhao",
+                            "nivel": 15
+                        },
+                        "combate": {
+                            "kills": 5,
+                            "muertes": 2,
+                            "asistencias": 14,
+                            "kda": 9.5
+                        },
+                        "resultado": {
+                            "victoria": true
+                        }
+                    }
+                },
+                "LA2_1622394431": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1622394431",
+                        "modo": "CLASSIC",
+                        "queue_id": 420,
+                        "posicion": "TOP",
+                        "duracion_segundos": 2009,
+                        "duracion_minutos": 33.48,
+                        "game_creation": 1788731837148,
+                        "game_end_timestamp": 1788733866126
+                    },
+                    "resultado": {
+                        "victoria": false
+                    },
+                    "campeon": {
+                        "id": 897,
+                        "nombre": "KSante",
+                        "nivel": 18
+                    },
+                    "combate": {
+                        "kills": 6,
+                        "muertes": 8,
+                        "asistencias": 5,
+                        "kda": 1.38
+                    },
+                    "farmeo": {
+                        "cs": 244,
+                        "cs_por_minuto": 7.29
+                    },
+                    "economia": {
+                        "oro": 14083,
+                        "oro_por_minuto": 420.6
+                    },
+                    "daño": {
+                        "daño_campeones": 29583,
+                        "daño_por_minuto": 883.51
+                    },
+                    "vision": {
+                        "vision_score": 29,
+                        "wards_colocados": 12,
+                        "wards_eliminados": 1,
+                        "control_wards": 2
+                    },
+                    "rival_rol": {
+                        "puuid": "phCdfNJJstAZm7Z5VcVH9ntRvdNKPhJU7Eqkm0OWaw3Dpak6Tnz77BkHyKnhDCxWeiSu4VdTwTnvxA",
+                        "nombre": "ChainSumeragi",
+                        "tag": "Chain",
+                        "team_id": 200,
+                        "posicion": "TOP",
+                        "campeon": {
+                            "id": 27,
+                            "nombre": "Singed",
+                            "nivel": 20
+                        },
+                        "combate": {
+                            "kills": 5,
+                            "muertes": 5,
+                            "asistencias": 10,
+                            "kda": 3.0
+                        },
+                        "resultado": {
+                            "victoria": true
+                        }
+                    }
+                },
+                "LA2_1622081684": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1622081684",
+                        "modo": "CLASSIC",
+                        "queue_id": 420,
+                        "posicion": "TOP",
+                        "duracion_segundos": 2616,
+                        "duracion_minutos": 43.6,
+                        "game_creation": 1788624406939,
+                        "game_end_timestamp": 1788627086465
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 897,
+                        "nombre": "KSante",
+                        "nivel": 20
+                    },
+                    "combate": {
+                        "kills": 9,
+                        "muertes": 7,
+                        "asistencias": 15,
+                        "kda": 3.43
+                    },
+                    "farmeo": {
+                        "cs": 254,
+                        "cs_por_minuto": 5.83
+                    },
+                    "economia": {
+                        "oro": 17319,
+                        "oro_por_minuto": 397.22
+                    },
+                    "daño": {
+                        "daño_campeones": 57414,
+                        "daño_por_minuto": 1316.83
+                    },
+                    "vision": {
+                        "vision_score": 39,
+                        "wards_colocados": 15,
+                        "wards_eliminados": 3,
+                        "control_wards": 1
+                    },
+                    "rival_rol": {
+                        "puuid": "HBoqjlV2YDfaAYRBNB9WWQwaWdro5mAKm5c_wwuyPECe-IhiaXdXuvjEsIpxsx4PBhbOwP1Msc_fcg",
+                        "nombre": "Tihim",
+                        "tag": "LAS",
+                        "team_id": 200,
+                        "posicion": "TOP",
+                        "campeon": {
+                            "id": 75,
+                            "nombre": "Nasus",
+                            "nivel": 20
+                        },
+                        "combate": {
+                            "kills": 6,
+                            "muertes": 8,
+                            "asistencias": 11,
+                            "kda": 2.12
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1622080124": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 200
+                    },
+                    "partida": {
+                        "match_id": "LA2_1622080124",
+                        "modo": "CLASSIC",
+                        "queue_id": 420,
+                        "posicion": "TOP",
+                        "duracion_segundos": 1827,
+                        "duracion_minutos": 30.45,
+                        "game_creation": 1788622131736,
+                        "game_end_timestamp": 1788623979073
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 897,
+                        "nombre": "KSante",
+                        "nivel": 18
+                    },
+                    "combate": {
+                        "kills": 2,
+                        "muertes": 3,
+                        "asistencias": 13,
+                        "kda": 5.0
+                    },
+                    "farmeo": {
+                        "cs": 215,
+                        "cs_por_minuto": 7.06
+                    },
+                    "economia": {
+                        "oro": 11499,
+                        "oro_por_minuto": 377.64
+                    },
+                    "daño": {
+                        "daño_campeones": 19672,
+                        "daño_por_minuto": 646.04
+                    },
+                    "vision": {
+                        "vision_score": 21,
+                        "wards_colocados": 11,
+                        "wards_eliminados": 1,
+                        "control_wards": 2
+                    },
+                    "rival_rol": {
+                        "puuid": "lWgP80oWyLzVE0c30Rxqj_moxa1TsMCTnFqwnnvTuCdnCIvVNKBpxDZ_naQNdWPldvPkJeXA-SZdWg",
+                        "nombre": "Nathán",
+                        "tag": "LAS",
+                        "team_id": 100,
+                        "posicion": "TOP",
+                        "campeon": {
+                            "id": 223,
+                            "nombre": "TahmKench",
+                            "nivel": 15
+                        },
+                        "combate": {
+                            "kills": 3,
+                            "muertes": 8,
+                            "asistencias": 6,
+                            "kda": 1.12
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1621555187": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1621555187",
+                        "modo": "SWIFTPLAY",
+                        "queue_id": 480,
+                        "posicion": "MIDDLE",
+                        "duracion_segundos": 843,
+                        "duracion_minutos": 14.05,
+                        "game_creation": 1788401915246,
+                        "game_end_timestamp": 1788402821024
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 90,
+                        "nombre": "Malzahar",
+                        "nivel": 15
+                    },
+                    "combate": {
+                        "kills": 4,
+                        "muertes": 1,
+                        "asistencias": 5,
+                        "kda": 9.0
+                    },
+                    "farmeo": {
+                        "cs": 144,
+                        "cs_por_minuto": 10.25
+                    },
+                    "economia": {
+                        "oro": 11727,
+                        "oro_por_minuto": 834.66
+                    },
+                    "daño": {
+                        "daño_campeones": 11357,
+                        "daño_por_minuto": 808.33
+                    },
+                    "vision": {
+                        "vision_score": 11,
+                        "wards_colocados": 5,
+                        "wards_eliminados": 0,
+                        "control_wards": 1
+                    },
+                    "rival_rol": {
+                        "puuid": "TvlgVpKj4-7WUxCDZ5EAnXW9WGmgA_MatmJ3aIhscz5ohMrZnognIt5oaxzORZaTKQ0byNpg-3Ubdw",
+                        "nombre": "peluv2",
+                        "tag": "15975",
+                        "team_id": 200,
+                        "posicion": "MIDDLE",
+                        "campeon": {
+                            "id": 81,
+                            "nombre": "Ezreal",
+                            "nivel": 13
+                        },
+                        "combate": {
+                            "kills": 0,
+                            "muertes": 4,
+                            "asistencias": 0,
+                            "kda": 0.0
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1621338185": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1621338185",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "JUNGLE",
+                        "duracion_segundos": 2095,
+                        "duracion_minutos": 34.92,
+                        "game_creation": 1788316065152,
+                        "game_end_timestamp": 1788318191005
+                    },
+                    "resultado": {
+                        "victoria": false
+                    },
+                    "campeon": {
+                        "id": 517,
+                        "nombre": "Sylas",
+                        "nivel": 17
+                    },
+                    "combate": {
+                        "kills": 9,
+                        "muertes": 8,
+                        "asistencias": 10,
+                        "kda": 2.38
+                    },
+                    "farmeo": {
+                        "cs": 219,
+                        "cs_por_minuto": 6.27
+                    },
+                    "economia": {
+                        "oro": 15350,
+                        "oro_por_minuto": 439.62
+                    },
+                    "daño": {
+                        "daño_campeones": 29642,
+                        "daño_por_minuto": 848.94
+                    },
+                    "vision": {
+                        "vision_score": 27,
+                        "wards_colocados": 3,
+                        "wards_eliminados": 4,
+                        "control_wards": 1
+                    },
+                    "rival_rol": {
+                        "puuid": "V1eZuitV8ivL4TCmfEx8F7oC5cj75vAiubEX4HPU-9EIzS51Hbyzzi-K7NBF-o-6rE5ohnlXb8hEug",
+                        "nombre": "Reynn",
+                        "tag": "SIMP",
+                        "team_id": 200,
+                        "posicion": "JUNGLE",
+                        "campeon": {
+                            "id": 200,
+                            "nombre": "Belveth",
+                            "nivel": 18
+                        },
+                        "combate": {
+                            "kills": 10,
+                            "muertes": 6,
+                            "asistencias": 14,
+                            "kda": 4.0
+                        },
+                        "resultado": {
+                            "victoria": true
+                        }
+                    }
+                },
+                "LA2_1621313308": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1621313308",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "JUNGLE",
+                        "duracion_segundos": 2205,
+                        "duracion_minutos": 36.75,
+                        "game_creation": 1788312143276,
+                        "game_end_timestamp": 1788314480495
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 72,
+                        "nombre": "Skarner",
+                        "nivel": 18
+                    },
+                    "combate": {
+                        "kills": 11,
+                        "muertes": 7,
+                        "asistencias": 20,
+                        "kda": 4.43
+                    },
+                    "farmeo": {
+                        "cs": 265,
+                        "cs_por_minuto": 7.21
+                    },
+                    "economia": {
+                        "oro": 18837,
+                        "oro_por_minuto": 512.57
+                    },
+                    "daño": {
+                        "daño_campeones": 34905,
+                        "daño_por_minuto": 949.8
+                    },
+                    "vision": {
+                        "vision_score": 26,
+                        "wards_colocados": 6,
+                        "wards_eliminados": 3,
+                        "control_wards": 5
+                    },
+                    "rival_rol": {
+                        "puuid": "I6gnPcQ-AuXI43FjU3HXeQyg0n6LwiBCD19Gv3m99V4WDvXPfFblYtkI_9UdlBa8EVzcDjdtUEhHxw",
+                        "nombre": "the anonimuss",
+                        "tag": "LAS",
+                        "team_id": 200,
+                        "posicion": "JUNGLE",
+                        "campeon": {
+                            "id": 107,
+                            "nombre": "Rengar",
+                            "nivel": 18
+                        },
+                        "combate": {
+                            "kills": 6,
+                            "muertes": 19,
+                            "asistencias": 9,
+                            "kda": 0.79
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1620610820": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1620610820",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "JUNGLE",
+                        "duracion_segundos": 1832,
+                        "duracion_minutos": 30.53,
+                        "game_creation": 1788056990671,
+                        "game_end_timestamp": 1788058854676
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 72,
+                        "nombre": "Skarner",
+                        "nivel": 17
+                    },
+                    "combate": {
+                        "kills": 9,
+                        "muertes": 4,
+                        "asistencias": 13,
+                        "kda": 5.5
+                    },
+                    "farmeo": {
+                        "cs": 195,
+                        "cs_por_minuto": 6.39
+                    },
+                    "economia": {
+                        "oro": 13791,
+                        "oro_por_minuto": 451.67
+                    },
+                    "daño": {
+                        "daño_campeones": 30686,
+                        "daño_por_minuto": 1005.0
+                    },
+                    "vision": {
+                        "vision_score": 25,
+                        "wards_colocados": 2,
+                        "wards_eliminados": 6,
+                        "control_wards": 2
+                    },
+                    "rival_rol": {
+                        "puuid": "CIgJsam9z0k9aSr3P5KqG73t0oTpWxPFGvPA1fXRixIFqndzlTVct2f3c0B8Kl7VFKfIXZ5GLaX1Xg",
+                        "nombre": "fumatusi",
+                        "tag": "LPKG",
+                        "team_id": 200,
+                        "posicion": "JUNGLE",
+                        "campeon": {
+                            "id": 32,
+                            "nombre": "Amumu",
+                            "nivel": 14
+                        },
+                        "combate": {
+                            "kills": 4,
+                            "muertes": 7,
+                            "asistencias": 8,
+                            "kda": 1.71
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1620595730": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 200
+                    },
+                    "partida": {
+                        "match_id": "LA2_1620595730",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "JUNGLE",
+                        "duracion_segundos": 1239,
+                        "duracion_minutos": 20.65,
+                        "game_creation": 1788054073583,
+                        "game_end_timestamp": 1788055364680
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 72,
+                        "nombre": "Skarner",
+                        "nivel": 12
+                    },
+                    "combate": {
+                        "kills": 4,
+                        "muertes": 2,
+                        "asistencias": 7,
+                        "kda": 5.5
+                    },
+                    "farmeo": {
+                        "cs": 138,
+                        "cs_por_minuto": 6.68
+                    },
+                    "economia": {
+                        "oro": 8384,
+                        "oro_por_minuto": 406.0
+                    },
+                    "daño": {
+                        "daño_campeones": 11938,
+                        "daño_por_minuto": 578.11
+                    },
+                    "vision": {
+                        "vision_score": 21,
+                        "wards_colocados": 4,
+                        "wards_eliminados": 1,
+                        "control_wards": 3
+                    },
+                    "rival_rol": {
+                        "puuid": "88xQUO23nCtcpD3mIAevCaOoVaLO9dDV7735lnDgNeseROXgKM5nbqSLC59YBPhWCMWx8BQX8TESCA",
+                        "nombre": "Ghalas Mildir",
+                        "tag": "LAS",
+                        "team_id": 100,
+                        "posicion": "JUNGLE",
+                        "campeon": {
+                            "id": 91,
+                            "nombre": "Talon",
+                            "nivel": 11
+                        },
+                        "combate": {
+                            "kills": 2,
+                            "muertes": 5,
+                            "asistencias": 4,
+                            "kda": 1.2
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1620588040": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1620588040",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "MIDDLE",
+                        "duracion_segundos": 1952,
+                        "duracion_minutos": 32.53,
+                        "game_creation": 1788051819687,
+                        "game_end_timestamp": 1788053860493
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 90,
+                        "nombre": "Malzahar",
+                        "nivel": 18
+                    },
+                    "combate": {
+                        "kills": 5,
+                        "muertes": 6,
+                        "asistencias": 11,
+                        "kda": 2.67
+                    },
+                    "farmeo": {
+                        "cs": 247,
+                        "cs_por_minuto": 7.59
+                    },
+                    "economia": {
+                        "oro": 14937,
+                        "oro_por_minuto": 459.13
+                    },
+                    "daño": {
+                        "daño_campeones": 28060,
+                        "daño_por_minuto": 862.5
+                    },
+                    "vision": {
+                        "vision_score": 35,
+                        "wards_colocados": 16,
+                        "wards_eliminados": 0,
+                        "control_wards": 3
+                    },
+                    "rival_rol": {
+                        "puuid": "kkszS1ApNjqTNnF0cEABI6_CyIQG9eVgBgYeXYqPWioWVsPu55UEpkOexZTuFVyYa-t0dXgOLt3cMg",
+                        "nombre": "LonelyWolf118",
+                        "tag": "LAS",
+                        "team_id": 200,
+                        "posicion": "MIDDLE",
+                        "campeon": {
+                            "id": 103,
+                            "nombre": "Ahri",
+                            "nivel": 16
+                        },
+                        "combate": {
+                            "kills": 13,
+                            "muertes": 9,
+                            "asistencias": 10,
+                            "kda": 2.56
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1620473019": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1620473019",
+                        "modo": "CLASSIC",
+                        "queue_id": 420,
+                        "posicion": "TOP",
+                        "duracion_segundos": 2080,
+                        "duracion_minutos": 34.67,
+                        "game_creation": 1788021493601,
+                        "game_end_timestamp": 1788023651864
+                    },
+                    "resultado": {
+                        "victoria": false
+                    },
+                    "campeon": {
+                        "id": 897,
+                        "nombre": "KSante",
+                        "nivel": 18
+                    },
+                    "combate": {
+                        "kills": 6,
+                        "muertes": 7,
+                        "asistencias": 9,
+                        "kda": 2.14
+                    },
+                    "farmeo": {
+                        "cs": 195,
+                        "cs_por_minuto": 5.62
+                    },
+                    "economia": {
+                        "oro": 13260,
+                        "oro_por_minuto": 382.5
+                    },
+                    "daño": {
+                        "daño_campeones": 35285,
+                        "daño_por_minuto": 1017.84
+                    },
+                    "vision": {
+                        "vision_score": 56,
+                        "wards_colocados": 17,
+                        "wards_eliminados": 3,
+                        "control_wards": 4
+                    },
+                    "rival_rol": {
+                        "puuid": "YzCH4laptQWJ3UHO0sPtQeATv8N6hPPxmXGHudlnBWbCuPJlNfKftOegfYJoS_6TC3lrpEZ_5du7OQ",
+                        "nombre": "sinhands04",
+                        "tag": "LAS",
+                        "team_id": 200,
+                        "posicion": "TOP",
+                        "campeon": {
+                            "id": 887,
+                            "nombre": "Gwen",
+                            "nivel": 19
+                        },
+                        "combate": {
+                            "kills": 6,
+                            "muertes": 7,
+                            "asistencias": 10,
+                            "kda": 2.29
+                        },
+                        "resultado": {
+                            "victoria": true
+                        }
+                    }
+                },
+                "LA2_1620370746": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 200
+                    },
+                    "partida": {
+                        "match_id": "LA2_1620370746",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "TOP",
+                        "duracion_segundos": 1557,
+                        "duracion_minutos": 25.95,
+                        "game_creation": 1787973362963,
+                        "game_end_timestamp": 1787974951228
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 58,
+                        "nombre": "Renekton",
+                        "nivel": 18
+                    },
+                    "combate": {
+                        "kills": 8,
+                        "muertes": 3,
+                        "asistencias": 4,
+                        "kda": 4.0
+                    },
+                    "farmeo": {
+                        "cs": 231,
+                        "cs_por_minuto": 8.9
+                    },
+                    "economia": {
+                        "oro": 13138,
+                        "oro_por_minuto": 506.28
+                    },
+                    "daño": {
+                        "daño_campeones": 25971,
+                        "daño_por_minuto": 1000.81
+                    },
+                    "vision": {
+                        "vision_score": 28,
+                        "wards_colocados": 8,
+                        "wards_eliminados": 3,
+                        "control_wards": 1
+                    },
+                    "rival_rol": {
+                        "puuid": "FHStbVsUqSb14tlZi0lKmRL3gUeuyH1CBLMDJ_h9aPRPgQ6-SQ-vHIOtOURZpvvslavxuKyVuF5PHw",
+                        "nombre": "ChikoritaCarry",
+                        "tag": "GGGG",
+                        "team_id": 100,
+                        "posicion": "TOP",
+                        "campeon": {
+                            "id": 83,
+                            "nombre": "Yorick",
+                            "nivel": 15
+                        },
+                        "combate": {
+                            "kills": 4,
+                            "muertes": 5,
+                            "asistencias": 2,
+                            "kda": 1.2
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1620360571": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1620360571",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "TOP",
+                        "duracion_segundos": 1428,
+                        "duracion_minutos": 23.8,
+                        "game_creation": 1787971432264,
+                        "game_end_timestamp": 1787973015303
+                    },
+                    "resultado": {
+                        "victoria": false
+                    },
+                    "campeon": {
+                        "id": 897,
+                        "nombre": "KSante",
+                        "nivel": 16
+                    },
+                    "combate": {
+                        "kills": 9,
+                        "muertes": 3,
+                        "asistencias": 2,
+                        "kda": 3.67
+                    },
+                    "farmeo": {
+                        "cs": 164,
+                        "cs_por_minuto": 6.89
+                    },
+                    "economia": {
+                        "oro": 9791,
+                        "oro_por_minuto": 411.39
+                    },
+                    "daño": {
+                        "daño_campeones": 20290,
+                        "daño_por_minuto": 852.52
+                    },
+                    "vision": {
+                        "vision_score": 30,
+                        "wards_colocados": 9,
+                        "wards_eliminados": 3,
+                        "control_wards": 1
+                    },
+                    "rival_rol": {
+                        "puuid": "W7IXdFeL9iaP33E953Wup3d8UpdlfkXyy79a5HEyi1X_x6P0NVeSlsCa82NcgIk7wduPx_YJ9Kgf6g",
+                        "nombre": "TerremotoPaChile",
+                        "tag": "LASSS",
+                        "team_id": 200,
+                        "posicion": "TOP",
+                        "campeon": {
+                            "id": 122,
+                            "nombre": "Darius",
+                            "nivel": 13
+                        },
+                        "combate": {
+                            "kills": 1,
+                            "muertes": 8,
+                            "asistencias": 4,
+                            "kda": 0.62
+                        },
+                        "resultado": {
+                            "victoria": true
+                        }
+                    }
+                },
+                "LA2_1620339074": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1620339074",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "TOP",
+                        "duracion_segundos": 1999,
+                        "duracion_minutos": 33.32,
+                        "game_creation": 1787967393163,
+                        "game_end_timestamp": 1787969487786
+                    },
+                    "resultado": {
+                        "victoria": false
+                    },
+                    "campeon": {
+                        "id": 897,
+                        "nombre": "KSante",
+                        "nivel": 17
+                    },
+                    "combate": {
+                        "kills": 5,
+                        "muertes": 8,
+                        "asistencias": 6,
+                        "kda": 1.38
+                    },
+                    "farmeo": {
+                        "cs": 206,
+                        "cs_por_minuto": 6.18
+                    },
+                    "economia": {
+                        "oro": 12062,
+                        "oro_por_minuto": 362.04
+                    },
+                    "daño": {
+                        "daño_campeones": 29159,
+                        "daño_por_minuto": 875.21
+                    },
+                    "vision": {
+                        "vision_score": 27,
+                        "wards_colocados": 12,
+                        "wards_eliminados": 0,
+                        "control_wards": 1
+                    },
+                    "rival_rol": {
+                        "puuid": "6_KIEmIG4fclttY3K4vyfCwQnPg0fjSO8lxk1evrvPYLtj_SuqeEO0bnJ3TKFVjBjM5q8WT0vU1l2g",
+                        "nombre": "ApolloBSystem",
+                        "tag": "XicoE",
+                        "team_id": 200,
+                        "posicion": "TOP",
+                        "campeon": {
+                            "id": 58,
+                            "nombre": "Renekton",
+                            "nivel": 18
+                        },
+                        "combate": {
+                            "kills": 10,
+                            "muertes": 6,
+                            "asistencias": 12,
+                            "kda": 3.67
+                        },
+                        "resultado": {
+                            "victoria": true
+                        }
+                    }
+                },
+                "LA2_1620239759": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1620239759",
+                        "modo": "CLASSIC",
+                        "queue_id": 420,
+                        "posicion": "TOP",
+                        "duracion_segundos": 1567,
+                        "duracion_minutos": 26.12,
+                        "game_creation": 1787940489898,
+                        "game_end_timestamp": 1787942186714
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 897,
+                        "nombre": "KSante",
+                        "nivel": 17
+                    },
+                    "combate": {
+                        "kills": 7,
+                        "muertes": 4,
+                        "asistencias": 5,
+                        "kda": 3.0
+                    },
+                    "farmeo": {
+                        "cs": 191,
+                        "cs_por_minuto": 7.31
+                    },
+                    "economia": {
+                        "oro": 12567,
+                        "oro_por_minuto": 481.19
+                    },
+                    "daño": {
+                        "daño_campeones": 25674,
+                        "daño_por_minuto": 983.05
+                    },
+                    "vision": {
+                        "vision_score": 23,
+                        "wards_colocados": 10,
+                        "wards_eliminados": 3,
+                        "control_wards": 2
+                    },
+                    "rival_rol": {
+                        "puuid": "W82U5Y5WyKYMkF9gTzEkANxC0lhZEiCa392rZva8ojRTF9W9Vz1st1xzMKXD5cTHIDczICtSrnKmcw",
+                        "nombre": "Obi",
+                        "tag": "Slap",
+                        "team_id": 200,
+                        "posicion": "TOP",
+                        "campeon": {
+                            "id": 875,
+                            "nombre": "Sett",
+                            "nivel": 15
+                        },
+                        "combate": {
+                            "kills": 5,
+                            "muertes": 8,
+                            "asistencias": 5,
+                            "kda": 1.25
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1619665108": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 200
+                    },
+                    "partida": {
+                        "match_id": "LA2_1619665108",
+                        "modo": "SWIFTPLAY",
+                        "queue_id": 480,
+                        "posicion": "MIDDLE",
+                        "duracion_segundos": 1421,
+                        "duracion_minutos": 23.68,
+                        "game_creation": 1787711018479,
+                        "game_end_timestamp": 1787712483247
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 90,
+                        "nombre": "Malzahar",
+                        "nivel": 18
+                    },
+                    "combate": {
+                        "kills": 2,
+                        "muertes": 4,
+                        "asistencias": 19,
+                        "kda": 5.25
+                    },
+                    "farmeo": {
+                        "cs": 169,
+                        "cs_por_minuto": 7.14
+                    },
+                    "economia": {
+                        "oro": 17846,
+                        "oro_por_minuto": 753.53
+                    },
+                    "daño": {
+                        "daño_campeones": 42093,
+                        "daño_por_minuto": 1777.33
+                    },
+                    "vision": {
+                        "vision_score": 23,
+                        "wards_colocados": 11,
+                        "wards_eliminados": 0,
+                        "control_wards": 1
+                    },
+                    "rival_rol": {
+                        "puuid": "H5MPtTPwGmYUgwzwFcCqs1NHlLqZaVgoJp1SbFO_UAt7q88R3vvCL9MIhbqBv5oSKUis8O5L8h_XLQ",
+                        "nombre": "Elmax1ii",
+                        "tag": "2988",
+                        "team_id": 100,
+                        "posicion": "MIDDLE",
+                        "campeon": {
+                            "id": 233,
+                            "nombre": "Briar",
+                            "nivel": 18
+                        },
+                        "combate": {
+                            "kills": 8,
+                            "muertes": 6,
+                            "asistencias": 8,
+                            "kda": 2.67
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1619454987": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 200
+                    },
+                    "partida": {
+                        "match_id": "LA2_1619454987",
+                        "modo": "CLASSIC",
+                        "queue_id": 440,
+                        "posicion": "MIDDLE",
+                        "duracion_segundos": 1927,
+                        "duracion_minutos": 32.12,
+                        "game_creation": 1787626864116,
+                        "game_end_timestamp": 1787628865340
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 897,
+                        "nombre": "KSante",
+                        "nivel": 17
+                    },
+                    "combate": {
+                        "kills": 8,
+                        "muertes": 4,
+                        "asistencias": 9,
+                        "kda": 4.25
+                    },
+                    "farmeo": {
+                        "cs": 231,
+                        "cs_por_minuto": 7.19
+                    },
+                    "economia": {
+                        "oro": 13211,
+                        "oro_por_minuto": 411.34
+                    },
+                    "daño": {
+                        "daño_campeones": 30728,
+                        "daño_por_minuto": 956.76
+                    },
+                    "vision": {
+                        "vision_score": 21,
+                        "wards_colocados": 10,
+                        "wards_eliminados": 0,
+                        "control_wards": 1
+                    },
+                    "rival_rol": {
+                        "puuid": "qINqoQmlB9dhkqbSYL4bPCwOLKH9SRkwJatUAhnWKQnjPQbenloDft-arha4j94cuyRM6mGago7MDg",
+                        "nombre": "Shiny Sudowoodo",
+                        "tag": "LAS",
+                        "team_id": 100,
+                        "posicion": "MIDDLE",
+                        "campeon": {
+                            "id": 777,
+                            "nombre": "Yone",
+                            "nivel": 14
+                        },
+                        "combate": {
+                            "kills": 1,
+                            "muertes": 3,
+                            "asistencias": 7,
+                            "kda": 2.67
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1619439733": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 200
+                    },
+                    "partida": {
+                        "match_id": "LA2_1619439733",
+                        "modo": "CLASSIC",
+                        "queue_id": 440,
+                        "posicion": "TOP",
+                        "duracion_segundos": 2115,
+                        "duracion_minutos": 35.25,
+                        "game_creation": 1787624372097,
+                        "game_end_timestamp": 1787626572878
+                    },
+                    "resultado": {
+                        "victoria": false
+                    },
+                    "campeon": {
+                        "id": 897,
+                        "nombre": "KSante",
+                        "nivel": 20
+                    },
+                    "combate": {
+                        "kills": 8,
+                        "muertes": 6,
+                        "asistencias": 10,
+                        "kda": 3.0
+                    },
+                    "farmeo": {
+                        "cs": 241,
+                        "cs_por_minuto": 6.84
+                    },
+                    "economia": {
+                        "oro": 14512,
+                        "oro_por_minuto": 411.69
+                    },
+                    "daño": {
+                        "daño_campeones": 24864,
+                        "daño_por_minuto": 705.36
+                    },
+                    "vision": {
+                        "vision_score": 37,
+                        "wards_colocados": 12,
+                        "wards_eliminados": 3,
+                        "control_wards": 2
+                    },
+                    "rival_rol": {
+                        "puuid": "wYFUnVhLzYeDD9Uop5IqfqaEMPZJ9sKFrPuUuwkMqqD8lSobslLlfupGoEsOzACs0LlIhnd_xT3ITg",
+                        "nombre": "Dewane",
+                        "tag": "001",
+                        "team_id": 100,
+                        "posicion": "TOP",
+                        "campeon": {
+                            "id": 875,
+                            "nombre": "Sett",
+                            "nivel": 18
+                        },
+                        "combate": {
+                            "kills": 5,
+                            "muertes": 11,
+                            "asistencias": 4,
+                            "kda": 0.82
+                        },
+                        "resultado": {
+                            "victoria": true
+                        }
+                    }
+                },
+                "LA2_1619435243": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1619435243",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "MIDDLE",
+                        "duracion_segundos": 929,
+                        "duracion_minutos": 15.48,
+                        "game_creation": 1787623110800,
+                        "game_end_timestamp": 1787624058300
+                    },
+                    "resultado": {
+                        "victoria": false
+                    },
+                    "campeon": {
+                        "id": 90,
+                        "nombre": "Malzahar",
+                        "nivel": 10
+                    },
+                    "combate": {
+                        "kills": 1,
+                        "muertes": 3,
+                        "asistencias": 0,
+                        "kda": 0.33
+                    },
+                    "farmeo": {
+                        "cs": 102,
+                        "cs_por_minuto": 6.59
+                    },
+                    "economia": {
+                        "oro": 4918,
+                        "oro_por_minuto": 317.63
+                    },
+                    "daño": {
+                        "daño_campeones": 5509,
+                        "daño_por_minuto": 355.8
+                    },
+                    "vision": {
+                        "vision_score": 3,
+                        "wards_colocados": 3,
+                        "wards_eliminados": 0,
+                        "control_wards": 0
+                    },
+                    "rival_rol": {
+                        "puuid": "w3EY2XFbc9xQmI7J1TawCKgMsfTsqW5wxKWIjDl3l4pPoV1SMSDfBaFiFzhq2t1pLEWDy5DnpW1wTQ",
+                        "nombre": "Duke",
+                        "tag": "RQT",
+                        "team_id": 200,
+                        "posicion": "MIDDLE",
+                        "campeon": {
+                            "id": 157,
+                            "nombre": "Yasuo",
+                            "nivel": 12
+                        },
+                        "combate": {
+                            "kills": 5,
+                            "muertes": 0,
+                            "asistencias": 2,
+                            "kda": 7
+                        },
+                        "resultado": {
+                            "victoria": true
+                        }
+                    }
+                },
+                "LA2_1619422998": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1619422998",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "JUNGLE",
+                        "duracion_segundos": 1106,
+                        "duracion_minutos": 18.43,
+                        "game_creation": 1787621740557,
+                        "game_end_timestamp": 1787622866126
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 72,
+                        "nombre": "Skarner",
+                        "nivel": 11
+                    },
+                    "combate": {
+                        "kills": 5,
+                        "muertes": 0,
+                        "asistencias": 5,
+                        "kda": 10
+                    },
+                    "farmeo": {
+                        "cs": 121,
+                        "cs_por_minuto": 6.56
+                    },
+                    "economia": {
+                        "oro": 7332,
+                        "oro_por_minuto": 397.76
+                    },
+                    "daño": {
+                        "daño_campeones": 7647,
+                        "daño_por_minuto": 414.85
+                    },
+                    "vision": {
+                        "vision_score": 18,
+                        "wards_colocados": 4,
+                        "wards_eliminados": 1,
+                        "control_wards": 3
+                    },
+                    "rival_rol": {
+                        "puuid": "1WZdD8YrKV6spTqxQMAsExuZ54lI7sIMeM8ZSwtL4e7RZfvBJ16FQKc8I8kTfRMVXzYE8dq878M9cA",
+                        "nombre": "sgsbf",
+                        "tag": "LAS",
+                        "team_id": 200,
+                        "posicion": "JUNGLE",
+                        "campeon": {
+                            "id": 9,
+                            "nombre": "FiddleSticks",
+                            "nivel": 10
+                        },
+                        "combate": {
+                            "kills": 1,
+                            "muertes": 3,
+                            "asistencias": 0,
+                            "kda": 0.33
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1619165202": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 200
+                    },
+                    "partida": {
+                        "match_id": "LA2_1619165202",
+                        "modo": "CLASSIC",
+                        "queue_id": 440,
+                        "posicion": "MIDDLE",
+                        "duracion_segundos": 1713,
+                        "duracion_minutos": 28.55,
+                        "game_creation": 1787526845389,
+                        "game_end_timestamp": 1787528613559
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 90,
+                        "nombre": "Malzahar",
+                        "nivel": 17
+                    },
+                    "combate": {
+                        "kills": 13,
+                        "muertes": 3,
+                        "asistencias": 9,
+                        "kda": 7.33
+                    },
+                    "farmeo": {
+                        "cs": 249,
+                        "cs_por_minuto": 8.72
+                    },
+                    "economia": {
+                        "oro": 16193,
+                        "oro_por_minuto": 567.18
+                    },
+                    "daño": {
+                        "daño_campeones": 31730,
+                        "daño_por_minuto": 1111.38
+                    },
+                    "vision": {
+                        "vision_score": 20,
+                        "wards_colocados": 11,
+                        "wards_eliminados": 0,
+                        "control_wards": 2
+                    },
+                    "rival_rol": {
+                        "puuid": "AnUxyim_IyCt_frZ1KE3UFwptDSX1b1jTjLrGfMijJCT_Eceyx3o5DI2FijgB9Lpl0dEeLx5b9SWxA",
+                        "nombre": "JhoX31",
+                        "tag": "LOL",
+                        "team_id": 100,
+                        "posicion": "MIDDLE",
+                        "campeon": {
+                            "id": 887,
+                            "nombre": "Gwen",
+                            "nivel": 15
+                        },
+                        "combate": {
+                            "kills": 6,
+                            "muertes": 10,
+                            "asistencias": 3,
+                            "kda": 0.9
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1619121586": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 200
+                    },
+                    "partida": {
+                        "match_id": "LA2_1619121586",
+                        "modo": "CLASSIC",
+                        "queue_id": 440,
+                        "posicion": "TOP",
+                        "duracion_segundos": 1599,
+                        "duracion_minutos": 26.65,
+                        "game_creation": 1787519091583,
+                        "game_end_timestamp": 1787520722960
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 897,
+                        "nombre": "KSante",
+                        "nivel": 18
+                    },
+                    "combate": {
+                        "kills": 7,
+                        "muertes": 5,
+                        "asistencias": 4,
+                        "kda": 2.2
+                    },
+                    "farmeo": {
+                        "cs": 203,
+                        "cs_por_minuto": 7.62
+                    },
+                    "economia": {
+                        "oro": 12285,
+                        "oro_por_minuto": 460.98
+                    },
+                    "daño": {
+                        "daño_campeones": 34846,
+                        "daño_por_minuto": 1307.54
+                    },
+                    "vision": {
+                        "vision_score": 22,
+                        "wards_colocados": 8,
+                        "wards_eliminados": 1,
+                        "control_wards": 2
+                    },
+                    "rival_rol": {
+                        "puuid": "DYn8TUSzob_ZtXzQ5JokFeetlYeMOmpI8cTPv6ecS5LRBAFX1tOX7ysBIf0CtK42oY8T546fIjI8Ow",
+                        "nombre": "spirix",
+                        "tag": "LAS",
+                        "team_id": 100,
+                        "posicion": "TOP",
+                        "campeon": {
+                            "id": 75,
+                            "nombre": "Nasus",
+                            "nivel": 15
+                        },
+                        "combate": {
+                            "kills": 1,
+                            "muertes": 6,
+                            "asistencias": 5,
+                            "kda": 1.0
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1618735081": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 100
+                    },
+                    "partida": {
+                        "match_id": "LA2_1618735081",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "JUNGLE",
+                        "duracion_segundos": 1211,
+                        "duracion_minutos": 20.18,
+                        "game_creation": 1787370315268,
+                        "game_end_timestamp": 1787371552295
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 72,
+                        "nombre": "Skarner",
+                        "nivel": 13
+                    },
+                    "combate": {
+                        "kills": 4,
+                        "muertes": 1,
+                        "asistencias": 12,
+                        "kda": 16.0
+                    },
+                    "farmeo": {
+                        "cs": 137,
+                        "cs_por_minuto": 6.79
+                    },
+                    "economia": {
+                        "oro": 8887,
+                        "oro_por_minuto": 440.31
+                    },
+                    "daño": {
+                        "daño_campeones": 9275,
+                        "daño_por_minuto": 459.54
+                    },
+                    "vision": {
+                        "vision_score": 20,
+                        "wards_colocados": 4,
+                        "wards_eliminados": 4,
+                        "control_wards": 3
+                    },
+                    "rival_rol": {
+                        "puuid": "ZYgBzwHC2dTpwBvdfXtfkZR63I2WtFrJ89wIuVpg9-Lt7_5LjcrhFf7c167IJlMxU9VbAathFlYHpQ",
+                        "nombre": "JuanchiCASLA",
+                        "tag": "2014",
+                        "team_id": 200,
+                        "posicion": "JUNGLE",
+                        "campeon": {
+                            "id": 64,
+                            "nombre": "LeeSin",
+                            "nivel": 12
+                        },
+                        "combate": {
+                            "kills": 3,
+                            "muertes": 8,
+                            "asistencias": 5,
+                            "kda": 1.0
+                        },
+                        "resultado": {
+                            "victoria": false
+                        }
+                    }
+                },
+                "LA2_1618719633": {
+                    "jugador": {
+                        "puuid": "iUJyP6QDnrk-z9iOh-tEB5VsMFOGNW-JW_H17TON1mS2mdrv_yADU0rT8DBXKre0dQ1wtnxl1yJveA",
+                        "nombre": "PichonAngel",
+                        "tag": "EZZZ",
+                        "team_id": 200
+                    },
+                    "partida": {
+                        "match_id": "LA2_1618719633",
+                        "modo": "CLASSIC",
+                        "queue_id": 400,
+                        "posicion": "MIDDLE",
+                        "duracion_segundos": 1617,
+                        "duracion_minutos": 26.95,
+                        "game_creation": 1787368376677,
+                        "game_end_timestamp": 1787370093221
+                    },
+                    "resultado": {
+                        "victoria": true
+                    },
+                    "campeon": {
+                        "id": 90,
+                        "nombre": "Malzahar",
+                        "nivel": 16
+                    },
+                    "combate": {
+                        "kills": 3,
+                        "muertes": 3,
+                        "asistencias": 4,
+                        "kda": 2.33
+                    },
+                    "farmeo": {
+                        "cs": 240,
+                        "cs_por_minuto": 8.91
+                    },
+                    "economia": {
+                        "oro": 11052,
+                        "oro_por_minuto": 410.09
+                    },
+                    "daño": {
+                        "daño_campeones": 14750,
+                        "daño_por_minuto": 547.31
+                    },
+                    "vision": {
+                        "vision_score": 15,
+                        "wards_colocados": 9,
+                        "wards_eliminados": 2,
+                        "control_wards": 2
+                    },
+                    "rival_rol": {
+                        "puuid": "yuw7A0pWY0grgfraJUqAqWfzwjRU8sDj05eE55AaXw6UFK0SKQEt3j623bO1SDZa91saFeWnJJ49PA",
+                        "nombre": "Hohenheim",
+                        "tag": "1428",
+                        "team_id": 100,
+                        "posicion": "MIDDLE",
+                        "campeon": {
+                            "id": 805,
+                            "nombre": "Locke",
+                            "nivel": 13
+                        },
+                        "combate": {
+                            "kills": 3,
+                            "muertes": 7,
+                            "asistencias": 0,
+                            "kda": 0.43
                         },
                         "resultado": {
                             "victoria": false

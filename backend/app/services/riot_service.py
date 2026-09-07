@@ -357,7 +357,82 @@ def obtener_cuenta_por_riot_id(
         f"Código HTTP: {response.status_code}"
     )
 
+# ============================================================
+# VALIDAR JUGADOR EN PLATAFORMA SELECCIONADA
+# ============================================================
 
+def validar_jugador_en_region(
+    puuid: str,
+    region: str
+):
+
+    validar_api_key()
+
+    base_url = (
+        obtener_url_plataforma(
+            region
+        )
+    )
+
+    url = (
+        f"{base_url}"
+        f"/lol/summoner/v4/summoners/by-puuid/{puuid}"
+    )
+
+    headers = {
+        "X-Riot-Token":
+            RIOT_API_KEY
+    }
+
+    response = requests.get(
+        url,
+        headers=headers,
+        timeout=10
+    )
+
+    if response.status_code == 200:
+
+        return True
+
+
+    if response.status_code == 404:
+
+        return False
+
+
+    if response.status_code == 401:
+
+        raise Exception(
+            "API Key no autorizada."
+        )
+
+
+    if response.status_code == 403:
+
+        raise Exception(
+            "API Key inválida o expirada."
+        )
+
+
+    if response.status_code == 429:
+
+        retry_after = (
+            response.headers.get(
+                "Retry-After"
+            )
+        )
+
+        raise RiotRateLimitException(
+            "Se alcanzó el límite de solicitudes de Riot API.",
+            retry_after
+        )
+
+
+    raise Exception(
+        "No se pudo validar la región del jugador. "
+        f"Código HTTP: {response.status_code}"
+    )
+    
 # ============================================================
 # 2. OBTENER RANGO DEL JUGADOR
 # ============================================================
