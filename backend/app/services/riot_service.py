@@ -432,7 +432,7 @@ def validar_jugador_en_region(
         "No se pudo validar la región del jugador. "
         f"Código HTTP: {response.status_code}"
     )
-    
+
 # ============================================================
 # 2. OBTENER RANGO DEL JUGADOR
 # ============================================================
@@ -811,12 +811,256 @@ def extraer_estadisticas_jugador(
             "teamId"
         )
     )
+        # ========================================================
+    # DETALLE COMPLETO DE LOS DOS EQUIPOS
+    # ========================================================
 
-    posicion = (
-        jugador.get(
-            "teamPosition"
+    equipos_detalle = {
+        "aliados": [],
+        "rivales": [],
+    }
+
+
+    for participante in participantes:
+
+        participante_kills = (
+            participante.get(
+                "kills",
+                0
+            )
         )
-    )
+
+        participante_deaths = (
+            participante.get(
+                "deaths",
+                0
+            )
+        )
+
+        participante_assists = (
+            participante.get(
+                "assists",
+                0
+            )
+        )
+
+
+        if participante_deaths > 0:
+
+            participante_kda = (
+                participante_kills
+                +
+                participante_assists
+            ) / participante_deaths
+
+        else:
+
+            participante_kda = (
+                participante_kills
+                +
+                participante_assists
+            )
+
+
+        participante_cs = (
+            participante.get(
+                "totalMinionsKilled",
+                0
+            )
+            +
+            participante.get(
+                "neutralMinionsKilled",
+                0
+            )
+        )
+
+
+        participante_detalle = {
+
+            "puuid":
+                participante.get(
+                    "puuid"
+                ),
+
+            "nombre":
+                participante.get(
+                    "riotIdGameName"
+                ),
+
+            "tag":
+                participante.get(
+                    "riotIdTagline"
+                ),
+
+            "team_id":
+                participante.get(
+                    "teamId"
+                ),
+
+            "victoria":
+                participante.get(
+                    "win",
+                    False
+                ),
+
+            "posicion":
+                participante.get(
+                    "teamPosition"
+                ),
+
+            "campeon": {
+
+                "id":
+                    participante.get(
+                        "championId"
+                    ),
+
+                "nombre":
+                    participante.get(
+                        "championName"
+                    ),
+
+                "nivel":
+                    participante.get(
+                        "champLevel"
+                    ),
+            },
+
+            "combate": {
+
+                "kills":
+                    participante_kills,
+
+                "muertes":
+                    participante_deaths,
+
+                "asistencias":
+                    participante_assists,
+
+                "kda":
+                    round(
+                        participante_kda,
+                        2
+                    ),
+            },
+
+            "recursos": {
+
+                "cs":
+                    participante_cs,
+
+                "oro":
+                    participante.get(
+                        "goldEarned",
+                        0
+                    ),
+            },
+
+            "daño": {
+
+                "campeones":
+                    participante.get(
+                        "totalDamageDealtToChampions",
+                        0
+                    ),
+            },
+
+            "vision": {
+
+                "score":
+                    participante.get(
+                        "visionScore",
+                        0
+                    ),
+
+                "wards":
+                    participante.get(
+                        "wardsPlaced",
+                        0
+                    ),
+
+                "control_wards":
+                    participante.get(
+                        "visionWardsBoughtInGame",
+                        0
+                    ),
+            },
+
+            "objetos": [
+
+                participante.get(
+                    "item0",
+                    0
+                ),
+
+                participante.get(
+                    "item1",
+                    0
+                ),
+
+                participante.get(
+                    "item2",
+                    0
+                ),
+
+                participante.get(
+                    "item3",
+                    0
+                ),
+
+                participante.get(
+                    "item4",
+                    0
+                ),
+
+                participante.get(
+                    "item5",
+                    0
+                ),
+
+                participante.get(
+                    "item6",
+                    0
+                ),
+
+            ],
+
+            "es_jugador":
+                participante.get(
+                    "puuid"
+                )
+                ==
+                puuid,
+        }
+
+
+        if (
+            participante.get(
+                "teamId"
+            )
+            ==
+            team_id_jugador
+        ):
+
+            equipos_detalle[
+                "aliados"
+            ].append(
+                participante_detalle
+            )
+
+        else:
+
+            equipos_detalle[
+                "rivales"
+            ].append(
+                participante_detalle
+            )
+
+        posicion = (
+            jugador.get(
+                "teamPosition"
+            )
+        )
 
     champion_name = (
         jugador.get(
@@ -1286,7 +1530,9 @@ def extraer_estadisticas_jugador(
 
 
         "rival_rol":
-            rival_rol
+            rival_rol,
+        "equipos":
+            equipos_detalle
     }
 
 
@@ -1379,6 +1625,9 @@ def obtener_estadisticas_ultimas_partidas(
             )
             and
             "rival_rol"
+            in partida_guardada
+            and
+            "equipos"
             in partida_guardada
         )
 

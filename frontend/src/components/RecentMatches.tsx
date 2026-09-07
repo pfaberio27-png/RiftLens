@@ -34,7 +34,9 @@ function RecentMatches({
 
 
   useEffect(() => {
+
     setPaginaActual(0);
+
   }, [partidas]);
 
 
@@ -274,6 +276,17 @@ function RecentMatches({
 
                   <span className="pagination-page">
 
+                    Página{" "}
+
+                    <strong>
+                      {paginaActual + 1}
+                    </strong>
+
+                    {" de "}
+
+                    <strong>
+                      {totalPaginas}
+                    </strong>
 
                   </span>
 

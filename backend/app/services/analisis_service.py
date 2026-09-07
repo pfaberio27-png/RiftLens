@@ -1255,7 +1255,16 @@ def analizar_jugador_con_referencia(
         )
 
         rival_rol = partida.get(
-            "rival_rol"
+            "rival_rol",
+            {}
+        )
+
+        equipos = partida.get(
+            "equipos",
+            {
+                "aliados": [],
+                "rivales": []
+            }
         )
 
 
@@ -1567,7 +1576,10 @@ def analizar_jugador_con_referencia(
             },
 
             "rival_rol":
-                rival_frontend
+                rival_frontend,
+                
+            "equipos":
+                equipos
         })
 
 

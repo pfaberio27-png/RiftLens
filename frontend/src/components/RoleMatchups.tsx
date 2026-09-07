@@ -5,11 +5,15 @@ import {
 
 import type {
   AnalisisResponse,
+  PartidaReciente,
 } from "../types/analisis";
 
 import {
   formatearRol,
 } from "../utils/formatters";
+
+import MatchDetailModal
+  from "./MatchDetailModal";
 
 
 type PartidasRecientes =
@@ -27,11 +31,33 @@ function RoleMatchups({
 
   const PARTIDAS_POR_PAGINA = 10;
 
+
+  // ============================================================
+  // PAGINACIÓN
+  // ============================================================
+
   const [
     paginaActual,
     setPaginaActual,
   ] = useState(0);
 
+
+  // ============================================================
+  // PARTIDA SELECCIONADA PARA EL MODAL
+  // ============================================================
+
+  const [
+    partidaSeleccionada,
+    setPartidaSeleccionada,
+  ] =
+    useState<PartidaReciente | null>(
+      null
+    );
+
+
+  // ============================================================
+  // PARTIDAS QUE TIENEN RIVAL DEL MISMO ROL
+  // ============================================================
 
   const partidasConRival =
     partidas.filter(
@@ -40,10 +66,24 @@ function RoleMatchups({
     );
 
 
+  // ============================================================
+  // REINICIAR AL CAMBIAR DE JUGADOR
+  // ============================================================
+
   useEffect(() => {
+
     setPaginaActual(0);
+
+    setPartidaSeleccionada(
+      null
+    );
+
   }, [partidas]);
 
+
+  // ============================================================
+  // DATOS DE PAGINACIÓN
+  // ============================================================
 
   const totalPartidas =
     partidasConRival.length;
@@ -76,6 +116,10 @@ function RoleMatchups({
     );
 
 
+  // ============================================================
+  // PAGINACIÓN
+  // ============================================================
+
   const irAnterior = () => {
 
     setPaginaActual(
@@ -101,6 +145,25 @@ function RoleMatchups({
 
   };
 
+
+  // ============================================================
+  // ABRIR DETALLE
+  // ============================================================
+
+  const abrirDetalle = (
+    partida: PartidaReciente
+  ) => {
+
+    setPartidaSeleccionada(
+      partida
+    );
+
+  };
+
+
+  // ============================================================
+  // RENDER
+  // ============================================================
 
   return (
 
@@ -158,11 +221,43 @@ function RoleMatchups({
                   }
                   className={
                     partida.victoria
-                      ? "matchup-row win"
-                      : "matchup-row loss"
+                      ? "matchup-row win clickable"
+                      : "matchup-row loss clickable"
+                  }
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+
+                    abrirDetalle(
+                      partida
+                    );
+
+                  }}
+                  onKeyDown={(event) => {
+
+                    if (
+                      event.key === "Enter" ||
+                      event.key === " "
+                    ) {
+
+                      event.preventDefault();
+
+                      abrirDetalle(
+                        partida
+                      );
+
+                    }
+
+                  }}
+                  aria-label={
+                    `Ver detalle de la partida con ${partida.campeon.nombre} contra ${rival.campeon.nombre}`
                   }
                 >
 
+
+                  {/* ============================================
+                      ROL
+                  ============================================ */}
 
                   <div className="matchup-role">
 
@@ -171,15 +266,21 @@ function RoleMatchups({
                     </span>
 
                     <strong>
+
                       {
                         formatearRol(
                           partida.rol
                         )
                       }
+
                     </strong>
 
                   </div>
 
+
+                  {/* ============================================
+                      JUGADOR
+                  ============================================ */}
 
                   <div className="matchup-player">
 
@@ -222,11 +323,13 @@ function RoleMatchups({
                       </span>
 
                       <strong>
+
                         {
                           partida
                             .campeon
                             .nombre
                         }
+
                       </strong>
 
                       <small>
@@ -259,6 +362,11 @@ function RoleMatchups({
 
                   </div>
 
+
+                  {/* ============================================
+                      VS
+                  ============================================ */}
+
                   <div className="matchup-vs">
 
                     <span>
@@ -283,11 +391,13 @@ function RoleMatchups({
                       </span>
 
                       <strong>
+
                         {
                           rival
                             .campeon
                             .nombre
                         }
+
                       </strong>
 
                       <small>
@@ -352,6 +462,11 @@ function RoleMatchups({
 
                   </div>
 
+
+                  {/* ============================================
+                      RESULTADO
+                  ============================================ */}
+
                   <div
                     className={
                       partida.victoria
@@ -386,6 +501,17 @@ function RoleMatchups({
                   </div>
 
 
+                  {/* ============================================
+                      INDICADOR DE DETALLE
+                  ============================================ */}
+
+                  <div className="matchup-detail-hint">
+
+                    Ver detalle
+
+                  </div>
+
+
                 </article>
 
               );
@@ -411,6 +537,10 @@ function RoleMatchups({
 
       </div>
 
+
+      {/* ========================================================
+          PAGINACIÓN
+      ======================================================== */}
 
       {
         totalPartidas > 0 && (
@@ -478,9 +608,34 @@ function RoleMatchups({
       }
 
 
+      {/* ========================================================
+          MODAL DE DETALLE DE PARTIDA
+      ======================================================== */}
+
+      {
+        partidaSeleccionada && (
+
+          <MatchDetailModal
+            partida={
+              partidaSeleccionada
+            }
+            onCerrar={() => {
+
+              setPartidaSeleccionada(
+                null
+              );
+
+            }}
+          />
+
+        )
+      }
+
+
     </section>
 
   );
+
 }
 
 

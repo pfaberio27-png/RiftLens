@@ -1,6 +1,9 @@
 export interface AnalisisRequest {
+
   riot_id: string;
+
   region: string;
+
 }
 
 
@@ -9,19 +12,35 @@ export interface AnalisisRequest {
 // ============================================================
 
 export interface DistribucionRol {
+
   partidas: number;
+
   porcentaje: number;
+
 }
+
 
 export interface DistribucionRoles {
+
   TOP: DistribucionRol;
+
   JUNGLE: DistribucionRol;
+
   MID: DistribucionRol;
+
   ADC: DistribucionRol;
+
   SUPPORT: DistribucionRol;
+
 }
 
+
+// ============================================================
+// RANGO
+// ============================================================
+
 export interface RangoJugador {
+
   clasificado: boolean;
 
   cola: string;
@@ -35,13 +54,16 @@ export interface RangoJugador {
   victorias: number;
 
   derrotas: number;
+
 }
+
 
 // ============================================================
 // JUGADOR
 // ============================================================
 
 export interface JugadorAnalizado {
+
   puuid: string;
 
   nombre: string;
@@ -51,6 +73,7 @@ export interface JugadorAnalizado {
   riot_id: string | null;
 
   rango: RangoJugador | null;
+
 }
 
 
@@ -59,10 +82,15 @@ export interface JugadorAnalizado {
 // ============================================================
 
 export interface MuestraAnalisis {
+
   partidas_obtenidas: number;
+
   partidas_analizadas: number;
+
   rol_principal: string;
+
   distribucion_roles: DistribucionRoles;
+
 }
 
 
@@ -71,23 +99,40 @@ export interface MuestraAnalisis {
 // ============================================================
 
 export interface MetricasReferencia {
+
   win_rate: number;
+
   kda: number;
+
   cs_por_minuto: number;
+
   oro_por_minuto: number;
+
   daño_por_minuto: number;
+
   vision_score: number;
+
 }
 
+
 export interface ReferenciaProfesional {
+
   fuente: string;
+
   dataset: string;
+
   temporada: number;
+
   tipo_referencia?: string;
+
   ligas?: string[];
+
   rol: string;
+
   partidas_referencia: number;
+
   metricas: MetricasReferencia;
+
 }
 
 
@@ -96,45 +141,79 @@ export interface ReferenciaProfesional {
 // ============================================================
 
 export interface ResultadosJugador {
+
   victorias: number;
+
   derrotas: number;
+
   win_rate: number;
+
 }
+
 
 export interface CombateJugador {
+
   kills_promedio: number;
+
   muertes_promedio: number;
+
   asistencias_promedio: number;
+
   kda_promedio: number;
+
 }
+
 
 export interface FarmeoJugador {
+
   cs_promedio: number;
+
   cs_por_minuto_promedio: number;
+
 }
+
 
 export interface EconomiaJugador {
+
   oro_promedio: number;
+
   oro_por_minuto_promedio: number;
+
 }
+
 
 export interface DanoJugador {
+
   daño_promedio: number;
+
   daño_por_minuto_promedio: number;
+
 }
+
 
 export interface VisionJugador {
+
   vision_score_promedio: number;
+
 }
 
+
 export interface EstadisticasJugador {
+
   partidas_analizadas: number;
+
   resultados: ResultadosJugador;
+
   combate: CombateJugador;
+
   farmeo: FarmeoJugador;
+
   economia: EconomiaJugador;
+
   daño: DanoJugador;
+
   vision: VisionJugador;
+
 }
 
 
@@ -143,11 +222,17 @@ export interface EstadisticasJugador {
 // ============================================================
 
 export interface CampeonInsignia {
+
   nombre: string | null;
+
   partidas: number;
+
   imagen_icono: string | null;
+
   imagen_splash: string | null;
+
   estadisticas: EstadisticasJugador | null;
+
 }
 
 
@@ -159,11 +244,17 @@ export type ResultadoReciente =
   | "V"
   | "D";
 
+
 export interface FormaReciente {
+
   resultados: ResultadoReciente[];
+
   victorias: number;
+
   derrotas: number;
+
   cantidad: number;
+
 }
 
 
@@ -172,11 +263,17 @@ export interface FormaReciente {
 // ============================================================
 
 export interface CampeonPartida {
+
   id?: number | null;
+
   nombre: string;
+
   nivel: number;
+
   imagen_icono: string | null;
+
   imagen_splash: string | null;
+
 }
 
 
@@ -185,10 +282,15 @@ export interface CampeonPartida {
 // ============================================================
 
 export interface CombatePartida {
+
   kills: number;
+
   muertes: number;
+
   asistencias: number;
+
   kda: number;
+
 }
 
 
@@ -197,8 +299,11 @@ export interface CombatePartida {
 // ============================================================
 
 export interface FarmeoPartida {
+
   cs: number;
+
   cs_por_minuto: number;
+
 }
 
 
@@ -207,8 +312,11 @@ export interface FarmeoPartida {
 // ============================================================
 
 export interface EconomiaPartida {
+
   oro: number;
+
   oro_por_minuto: number;
+
 }
 
 
@@ -217,8 +325,11 @@ export interface EconomiaPartida {
 // ============================================================
 
 export interface DanoPartida {
+
   daño_campeones: number;
+
   daño_por_minuto: number;
+
 }
 
 
@@ -227,7 +338,9 @@ export interface DanoPartida {
 // ============================================================
 
 export interface VisionPartida {
+
   vision_score: number;
+
 }
 
 
@@ -236,7 +349,9 @@ export interface VisionPartida {
 // ============================================================
 
 export interface ResultadoRival {
+
   victoria: boolean;
+
 }
 
 
@@ -245,10 +360,15 @@ export interface ResultadoRival {
 // ============================================================
 
 export interface RivalRol {
+
   puuid: string | null;
+
   nombre: string | null;
+
   tag: string | null;
+
   team_id: number | null;
+
   rol: string | null;
 
   campeon: CampeonPartida;
@@ -256,6 +376,106 @@ export interface RivalRol {
   combate: CombatePartida;
 
   resultado: ResultadoRival;
+
+}
+
+
+// ============================================================
+// PARTICIPANTE DEL DETALLE DE PARTIDA
+// ============================================================
+
+export interface CampeonParticipante {
+
+  id: number | null;
+
+  nombre: string | null;
+
+  nivel: number | null;
+
+}
+
+
+export interface CombateParticipante {
+
+  kills: number;
+
+  muertes: number;
+
+  asistencias: number;
+
+  kda: number;
+
+}
+
+
+export interface RecursosParticipante {
+
+  cs: number;
+
+  oro: number;
+
+}
+
+
+export interface DanoParticipante {
+
+  campeones: number;
+
+}
+
+
+export interface VisionParticipante {
+
+  score: number;
+
+  wards: number;
+
+  control_wards: number;
+
+}
+
+
+export interface ParticipantePartida {
+
+  puuid: string | null;
+
+  nombre: string | null;
+
+  tag: string | null;
+
+  team_id: number | null;
+
+  victoria: boolean;
+
+  posicion: string | null;
+
+  campeon: CampeonParticipante;
+
+  combate: CombateParticipante;
+
+  recursos: RecursosParticipante;
+
+  daño: DanoParticipante;
+
+  vision: VisionParticipante;
+
+  objetos: number[];
+
+  es_jugador: boolean;
+
+}
+
+
+// ============================================================
+// EQUIPOS DE UNA PARTIDA
+// ============================================================
+
+export interface EquiposPartida {
+
+  aliados: ParticipantePartida[];
+
+  rivales: ParticipantePartida[];
+
 }
 
 
@@ -264,6 +484,7 @@ export interface RivalRol {
 // ============================================================
 
 export interface PartidaReciente {
+
   match_id: string | null;
 
   modo: string | null;
@@ -291,6 +512,9 @@ export interface PartidaReciente {
   vision: VisionPartida;
 
   rival_rol: RivalRol | null;
+
+  equipos?: EquiposPartida;
+
 }
 
 
@@ -303,23 +527,40 @@ export type EstadoMetrica =
   | "inferior"
   | "similar";
 
+
 export interface ComparacionMetrica {
+
   nombre: string;
+
   jugador: number;
+
   referencia: number;
+
   diferencia: number;
+
   diferencia_porcentual: number;
+
   porcentaje_referencia: number;
+
   estado: EstadoMetrica;
+
 }
 
+
 export interface Comparacion {
+
   win_rate: ComparacionMetrica;
+
   kda: ComparacionMetrica;
+
   cs_por_minuto: ComparacionMetrica;
+
   oro_por_minuto: ComparacionMetrica;
+
   daño_por_minuto: ComparacionMetrica;
+
   vision_score: ComparacionMetrica;
+
 }
 
 
@@ -328,9 +569,13 @@ export interface Comparacion {
 // ============================================================
 
 export interface Score {
+
   valor: number;
+
   maximo: number;
+
   clasificacion: string;
+
 }
 
 
@@ -339,11 +584,17 @@ export interface Score {
 // ============================================================
 
 export interface EvaluacionMetrica {
+
   metrica: string;
+
   nombre: string;
+
   jugador: number;
+
   referencia: number;
+
   diferencia_porcentual: number;
+
 }
 
 
@@ -352,10 +603,15 @@ export interface EvaluacionMetrica {
 // ============================================================
 
 export interface Recomendacion {
+
   metrica: string;
+
   nombre: string;
+
   diferencia_porcentual: number;
+
   recomendacion: string;
+
 }
 
 
@@ -364,6 +620,7 @@ export interface Recomendacion {
 // ============================================================
 
 export interface AnalisisCompleto {
+
   jugador: JugadorAnalizado;
 
   campeon_insignia: CampeonInsignia;
@@ -389,6 +646,7 @@ export interface AnalisisCompleto {
   metricas_similares: EvaluacionMetrica[];
 
   recomendaciones: Recomendacion[];
+
 }
 
 
@@ -397,7 +655,13 @@ export interface AnalisisCompleto {
 // ============================================================
 
 export interface AnalisisResponse {
+
   mensaje: string;
+
   riot_id: string;
+
+  region: string;
+
   analisis: AnalisisCompleto;
+
 }
