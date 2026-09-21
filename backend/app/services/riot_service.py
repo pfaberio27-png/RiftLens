@@ -6,6 +6,10 @@ import requests
 from dotenv import load_dotenv
 
 
+from backend.app.services.persistencia_service import (
+    guardar_partidas_sql,
+)
+
 load_dotenv("backend/.env")
 
 RIOT_API_KEY = os.getenv("RIOT_API_KEY")
@@ -1802,5 +1806,30 @@ def obtener_estadisticas_ultimas_partidas(
             datos
         )
 
+    # ========================================================
+    # PERSISTENCIA SQL SERVER
+    # ========================================================
+
+    try:
+
+        resumen_sql = guardar_partidas_sql(
+            puuid=puuid,
+            region=region,
+            partidas=resultados,
+        )
+
+        print(
+            "SQL Server - Persistencia:",
+            resumen_sql
+        )
+
+    except Exception as error:
+
+        # La persistencia no debe impedir que el análisis
+        # continúe si SQL Server presenta un problema.
+        print(
+            "Error guardando partidas en SQL Server:",
+            error
+        )
 
     return resultados

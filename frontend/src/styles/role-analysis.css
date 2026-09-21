@@ -1,0 +1,827 @@
+/* ============================================================
+   HU10 - ANÁLISIS POR POSICIÓN
+============================================================ */
+
+
+/* ============================================================
+   TARJETAS DE ROLES
+============================================================ */
+
+.roles-grid .rol-card {
+  position: relative;
+
+  width: 100%;
+
+  font-family: inherit;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.roles-grid .rol-card:not(:disabled):hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(200, 170, 110, 0.55);
+
+  background:
+    rgba(200, 170, 110, 0.045);
+}
+
+
+.roles-grid .rol-card.activo {
+  border-color:
+    rgba(200, 170, 110, 0.75);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(200, 170, 110, 0.08),
+      rgba(15, 22, 31, 0.96)
+    );
+}
+
+
+.roles-grid .rol-card.sin-partidas {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}
+
+
+.rol-main-label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--gold);
+
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+
+.rol-open-detail {
+  display: block;
+
+  margin-top: 14px;
+
+  color: var(--text-blue);
+
+  font-size: 9px;
+  font-weight: 600;
+
+  letter-spacing: 0.03em;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.rol-card:not(:disabled):hover
+.rol-open-detail {
+  color: var(--gold);
+
+  transform: translateX(3px);
+}
+
+
+/* ============================================================
+   FONDO DEL MODAL
+============================================================ */
+
+.role-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 28px;
+
+  background:
+    rgba(3, 7, 12, 0.86);
+
+  backdrop-filter:
+    blur(6px);
+
+  -webkit-backdrop-filter:
+    blur(6px);
+
+  animation:
+    roleOverlayIn 0.18s ease;
+}
+
+
+/* ============================================================
+   CONTENEDOR DEL MODAL
+============================================================ */
+
+.role-modal {
+  position: relative;
+
+  width:
+    min(1100px, 100%);
+
+  max-height:
+    calc(100vh - 56px);
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.3);
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #101821,
+      #080d14
+    );
+
+  box-shadow:
+    0 30px 90px
+    rgba(0, 0, 0, 0.6);
+
+  animation:
+    roleModalIn 0.22s ease;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(200, 170, 110, 0.65)
+    rgba(15, 23, 32, 0.8);
+}
+
+
+.role-modal::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+.role-modal::-webkit-scrollbar-track {
+  background:
+    rgba(15, 23, 32, 0.8);
+}
+
+
+.role-modal::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background:
+    rgba(200, 170, 110, 0.6);
+}
+
+
+.role-modal::-webkit-scrollbar-thumb:hover {
+  background:
+    var(--gold);
+}
+
+
+/* ============================================================
+   CABECERA
+============================================================ */
+
+.role-modal-header {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 5;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  padding:
+    28px 30px 24px;
+
+  border-bottom:
+    1px solid
+    rgba(200, 170, 110, 0.16);
+
+  background:
+    rgba(9, 14, 21, 0.97);
+
+  backdrop-filter:
+    blur(8px);
+
+  -webkit-backdrop-filter:
+    blur(8px);
+}
+
+
+.role-modal-eyebrow {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color:
+    var(--gold);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.13em;
+}
+
+
+.role-modal-header h2 {
+  margin: 0;
+
+  color:
+    var(--gold-bright);
+
+  font-family:
+    "Cinzel",
+    serif;
+
+  font-size:
+    clamp(
+      24px,
+      3vw,
+      32px
+    );
+
+  font-weight: 600;
+}
+
+
+.role-modal-header p {
+  max-width: 650px;
+
+  margin:
+    8px 0 0;
+
+  color:
+    var(--text-dim);
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+/* ============================================================
+   BOTÓN CERRAR
+============================================================ */
+
+.role-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.28);
+
+  border-radius: 8px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  color:
+    var(--gold-bright);
+
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 24px;
+  line-height: 1;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.role-modal-close:hover {
+  border-color:
+    rgba(200, 170, 110, 0.7);
+
+  background:
+    rgba(200, 170, 110, 0.08);
+
+  transform:
+    scale(1.04);
+}
+
+
+/* ============================================================
+   RESUMEN
+============================================================ */
+
+.role-modal-summary {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      5,
+      minmax(0, 1fr)
+    );
+
+  gap: 10px;
+
+  padding:
+    24px 30px 0;
+}
+
+
+.role-modal-summary > div {
+  min-height: 95px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    14px 10px;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.12);
+
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.018);
+
+  text-align: center;
+}
+
+
+.role-modal-summary span {
+  display: block;
+
+  color:
+    var(--text-dim);
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 0.07em;
+}
+
+
+.role-modal-summary strong {
+  display: block;
+
+  margin-top: 6px;
+
+  color:
+    var(--gold-bright);
+
+  font-family:
+    "Cinzel",
+    serif;
+
+  font-size: 20px;
+}
+
+
+.role-modal-summary
+.role-modal-win {
+  color:
+    #52c7a5;
+}
+
+
+.role-modal-summary
+.role-modal-loss {
+  color:
+    #d36a6a;
+}
+
+
+/* ============================================================
+   BLOQUES INTERNOS
+============================================================ */
+
+.role-modal-block {
+  margin:
+    24px 30px 0;
+}
+
+
+.role-modal-block-title {
+  margin-bottom: 10px;
+}
+
+
+.role-modal-block-title span {
+  color:
+    var(--gold);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+}
+
+
+/* ============================================================
+   MÉTRICAS DE RENDIMIENTO
+============================================================ */
+
+.role-modal-metrics {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      5,
+      minmax(0, 1fr)
+    );
+
+  gap: 10px;
+}
+
+
+.role-modal-metrics > div {
+  min-height: 95px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    15px 10px;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.12);
+
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.018);
+
+  text-align: center;
+}
+
+
+.role-modal-metrics span {
+  display: block;
+
+  color:
+    var(--text-dim);
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 0.06em;
+}
+
+
+.role-modal-metrics strong {
+  display: block;
+
+  margin-top: 7px;
+
+  color:
+    var(--gold-bright);
+
+  font-size: 17px;
+}
+
+
+/* ============================================================
+   PROMEDIOS DE COMBATE
+============================================================ */
+
+.role-modal-combat {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+
+  gap: 10px;
+}
+
+
+.role-modal-combat > div {
+  min-height: 85px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    14px 10px;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.1);
+
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.015);
+
+  text-align: center;
+}
+
+
+.role-modal-combat span {
+  display: block;
+
+  color:
+    var(--text-dim);
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 0.06em;
+}
+
+
+.role-modal-combat strong {
+  display: block;
+
+  margin-top: 6px;
+
+  color:
+    var(--gold-bright);
+
+  font-size: 16px;
+}
+
+
+/* ============================================================
+   MUESTRA REDUCIDA
+============================================================ */
+
+.role-modal-warning {
+  margin:
+    20px 30px 0;
+
+  padding:
+    12px 14px;
+
+  border-left:
+    2px solid
+    var(--gold);
+
+  background:
+    rgba(200, 170, 110, 0.04);
+}
+
+
+.role-modal-warning > strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color:
+    var(--gold);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+
+.role-modal-warning p {
+  margin: 0;
+
+  color:
+    var(--text-dim);
+
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+
+.role-modal-warning b {
+  color:
+    var(--gold-bright);
+}
+
+
+/* ============================================================
+   FOOTER
+============================================================ */
+
+.role-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-top: 24px;
+
+  padding:
+    17px 30px;
+
+  border-top:
+    1px solid
+    rgba(200, 170, 110, 0.14);
+}
+
+
+.role-modal-footer span {
+  color:
+    var(--text-dim);
+
+  font-size: 9px;
+}
+
+
+.role-modal-footer button {
+  padding:
+    9px 20px;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.4);
+
+  border-radius: 7px;
+
+  background:
+    rgba(200, 170, 110, 0.06);
+
+  color:
+    var(--gold-bright);
+
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 10px;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.role-modal-footer button:hover {
+  border-color:
+    var(--gold);
+
+  background:
+    rgba(200, 170, 110, 0.12);
+}
+
+
+/* ============================================================
+   ANIMACIONES
+============================================================ */
+
+@keyframes roleOverlayIn {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+@keyframes roleModalIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(12px)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 850px) {
+
+  .role-modal-summary {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+
+
+  .role-modal-metrics {
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(0, 1fr)
+      );
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .role-modal-overlay {
+    padding: 12px;
+  }
+
+
+  .role-modal {
+    max-height:
+      calc(100vh - 24px);
+  }
+
+
+  .role-modal-header {
+    padding:
+      20px 18px;
+  }
+
+
+  .role-modal-summary {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
+    padding:
+      18px 18px 0;
+  }
+
+
+  .role-modal-block {
+    margin:
+      18px 18px 0;
+  }
+
+
+  .role-modal-metrics {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+
+
+  .role-modal-combat {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .role-modal-warning {
+    margin:
+      18px 18px 0;
+  }
+
+
+  .role-modal-footer {
+    padding:
+      15px 18px;
+  }
+
+}

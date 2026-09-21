@@ -1,0 +1,541 @@
+/* K-MEANS - PATRONES DE RENDIMIENTO */
+
+.kmeans-section {
+  position: relative;
+}
+
+.kmeans-summary {
+  display: grid;
+  grid-template-columns:
+    minmax(260px, 1.6fr)
+    repeat(3, minmax(130px, 0.7fr));
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.kmeans-summary-main,
+.kmeans-summary-stat {
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(22, 31, 42, 0.94),
+      rgba(10, 14, 22, 0.96)
+    );
+  border-radius: 14px;
+}
+
+.kmeans-summary-main {
+  padding: 22px;
+}
+
+.kmeans-label {
+  display: block;
+  margin-bottom: 8px;
+
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.kmeans-algorithm {
+  display: block;
+
+  color: var(--gold-bright);
+  font-family: "Cinzel", serif;
+  font-size: 24px;
+}
+
+.kmeans-summary-main p {
+  margin: 8px 0 0;
+
+  color: var(--text-dim);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.kmeans-summary-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 130px;
+  padding: 18px;
+  text-align: center;
+}
+
+.kmeans-summary-stat span {
+  color: var(--text-dim);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.kmeans-summary-stat strong {
+  margin: 7px 0 3px;
+
+  color: var(--gold-bright);
+  font-family: "Cinzel", serif;
+  font-size: 26px;
+}
+
+.kmeans-summary-stat small {
+  color: var(--text-dim);
+  font-size: 11px;
+}
+
+.kmeans-variables {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  margin-top: 14px;
+  padding: 14px 18px;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  background: rgba(15, 23, 32, 0.7);
+}
+
+.kmeans-variables-title {
+  flex-shrink: 0;
+
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.kmeans-variable-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.kmeans-variable-list span {
+  padding: 6px 10px;
+
+  border: 1px solid
+    rgba(200, 170, 110, 0.2);
+  border-radius: 999px;
+
+  color: var(--gold-bright);
+  background:
+    rgba(200, 170, 110, 0.06);
+
+  font-size: 11px;
+}
+
+.kmeans-clusters {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.kmeans-cluster-card {
+  position: relative;
+  overflow: hidden;
+
+  padding: 20px;
+
+  border: 1px solid var(--line);
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(22, 31, 42, 0.95),
+      rgba(10, 14, 22, 0.96)
+    );
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.kmeans-cluster-card:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(200, 170, 110, 0.42);
+
+  box-shadow:
+    0 14px 34px
+    rgba(0, 0, 0, 0.22);
+}
+
+.kmeans-cluster-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.kmeans-pattern-number {
+  display: block;
+  margin-bottom: 5px;
+
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.kmeans-cluster-top h3 {
+  margin: 0;
+
+  color: var(--gold-bright);
+  font-size: 17px;
+}
+
+.kmeans-percentage {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.kmeans-percentage strong {
+  display: block;
+
+  color: var(--gold);
+  font-family: "Cinzel", serif;
+  font-size: 22px;
+}
+
+.kmeans-percentage span {
+  display: block;
+  margin-top: 2px;
+
+  color: var(--text-dim);
+  font-size: 11px;
+}
+
+.kmeans-cluster-description {
+  min-height: 42px;
+
+  margin: 14px 0 18px;
+
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.kmeans-metrics {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      5,
+      minmax(0, 1fr)
+    );
+
+  gap: 7px;
+}
+
+.kmeans-metric {
+  padding: 10px 7px;
+
+  border: 1px solid
+    rgba(200, 170, 110, 0.12);
+
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.018);
+
+  text-align: center;
+}
+
+.kmeans-metric span {
+  display: block;
+
+  color: var(--text-dim);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.kmeans-metric strong {
+  display: block;
+  margin-top: 5px;
+
+  color: var(--gold-bright);
+  font-size: 13px;
+}
+
+.kmeans-share {
+  overflow: hidden;
+
+  height: 3px;
+  margin-top: 18px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+}
+
+.kmeans-share-fill {
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--gold-dim),
+      var(--gold)
+    );
+}
+
+.kmeans-evaluation {
+  margin-top: 18px;
+  padding: 20px;
+
+  border: 1px solid var(--line);
+  border-radius: 14px;
+
+  background:
+    rgba(15, 23, 32, 0.76);
+}
+
+.kmeans-evaluation-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.kmeans-evaluation-head h3 {
+  margin: 0;
+
+  color: var(--gold-bright);
+  font-size: 18px;
+}
+
+.kmeans-evaluation-head p {
+  max-width: 460px;
+  margin: 0;
+
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.kmeans-evaluation-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(105px, 1fr)
+    );
+
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.kmeans-k-card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 13px 10px;
+
+  border: 1px solid
+    rgba(200, 170, 110, 0.12);
+
+  border-radius: 10px;
+
+  background:
+    rgba(255, 255, 255, 0.018);
+}
+
+.kmeans-k-card > span {
+  color: var(--text-dim);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.kmeans-k-card > strong {
+  margin: 2px 0 8px;
+
+  color: var(--gold-bright);
+  font-family: "Cinzel", serif;
+  font-size: 22px;
+}
+
+.kmeans-k-card small {
+  color: var(--text-dim);
+  font-size: 9px;
+}
+
+.kmeans-k-card b {
+  margin-top: 3px;
+
+  color: var(--gold-bright);
+  font-size: 12px;
+}
+
+.kmeans-k-card.selected {
+  border-color:
+    rgba(200, 170, 110, 0.62);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(200, 170, 110, 0.11),
+      rgba(200, 170, 110, 0.03)
+    );
+}
+
+.kmeans-k-card em {
+  margin-top: 8px;
+  padding: 3px 7px;
+
+  border-radius: 999px;
+
+  color: var(--void);
+  background: var(--gold);
+
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.kmeans-methodology {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  margin-top: 14px;
+  padding: 14px 16px;
+
+  border-left:
+    2px solid var(--gold-dim);
+
+  background:
+    rgba(200, 170, 110, 0.035);
+}
+
+.kmeans-methodology > span {
+  flex-shrink: 0;
+
+  color: var(--gold);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.kmeans-methodology p {
+  margin: 0;
+
+  color: var(--text-dim);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.kmeans-methodology strong {
+  color: var(--gold-bright);
+}
+
+.kmeans-empty {
+  margin-top: 20px;
+  padding: 28px;
+
+  border: 1px solid var(--line);
+  border-radius: 14px;
+
+  background:
+    rgba(15, 23, 32, 0.72);
+
+  text-align: center;
+}
+
+.kmeans-empty strong {
+  color: var(--gold-bright);
+}
+
+.kmeans-empty p {
+  margin: 8px 0 0;
+  color: var(--text-dim);
+}
+
+/* K-MEANS - RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+  .kmeans-summary {
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
+  .kmeans-summary-main {
+    grid-column:
+      1 / -1;
+  }
+
+  .kmeans-metrics {
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
+}
+
+@media (max-width: 760px) {
+
+  .kmeans-clusters {
+    grid-template-columns: 1fr;
+  }
+
+  .kmeans-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .kmeans-summary-main {
+    grid-column: auto;
+  }
+
+  .kmeans-variables {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .kmeans-evaluation-head {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .kmeans-metrics {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .kmeans-summary-stat {
+    min-height: 100px;
+  }
+
+  .kmeans-cluster-top {
+    flex-direction: column;
+  }
+
+  .kmeans-percentage {
+    text-align: left;
+  }
+
+}

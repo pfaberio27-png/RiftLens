@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+
+/* VARIABLES */
+
+:root {
+  --void: #0a0e16;
+  --panel: #0f1720;
+  --panel-raised: #161f2a;
+
+  --line: rgba(200, 170, 110, 0.18);
+
+  --gold: #c8aa6e;
+  --gold-bright: #f0e6d2;
+  --gold-dim: #8a7548;
+
+  --cyan: #0bc6d9;
+
+  --victory: #3fa34d;
+  --defeat: #c1443c;
+
+  --text-dim: #8c97a6;
+}
+
+/* RESET */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+
+  background: var(--void);
+  color: var(--gold-bright);
+
+  font-family: "IBM Plex Sans", sans-serif;
+  line-height: 1.5;
+
+  overflow-x: hidden;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.01em;
+}
+
+.app {
+  min-height: 100vh;
+  background: var(--void);
+}

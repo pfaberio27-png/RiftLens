@@ -2,6 +2,8 @@ import json
 import os
 from collections import Counter
 
+from backend.app.services.kmeans_service import analizar_patrones_kmeans
+
 # ============================================================
 # CONFIGURACIÓN
 # ============================================================
@@ -1041,6 +1043,794 @@ def generar_recomendaciones(debilidades):
 
     return resultado
 
+# ============================================================
+# ANÁLISIS POR CAMPEÓN
+# ============================================================
+
+def analizar_por_campeon(partidas):
+    """
+    Agrupa las partidas del jugador por campeón y calcula
+    estadísticas de rendimiento para cada campeón utilizado.
+
+    Métricas:
+        - partidas
+        - victorias
+        - derrotas
+        - win rate
+        - KDA
+        - CS por minuto
+        - oro por minuto
+        - daño por minuto
+        - vision score
+    """
+
+    partidas_validas = obtener_partidas_validas(partidas)
+
+    if not partidas_validas:
+        return []
+
+    # --------------------------------------------------------
+    # AGRUPAR PARTIDAS POR CAMPEÓN
+    # --------------------------------------------------------
+
+    grupos_campeones = {}
+
+    for partida in partidas_validas:
+
+        campeon = partida.get(
+            "campeon",
+            {}
+        )
+
+        nombre_campeon = campeon.get(
+            "nombre"
+        )
+
+        if not nombre_campeon:
+            continue
+
+        if nombre_campeon not in grupos_campeones:
+            grupos_campeones[nombre_campeon] = []
+
+        grupos_campeones[nombre_campeon].append(
+            partida
+        )
+
+    # --------------------------------------------------------
+    # CALCULAR ESTADÍSTICAS POR CAMPEÓN
+    # --------------------------------------------------------
+
+    resultado = []
+
+    for nombre_campeon, partidas_campeon in grupos_campeones.items():
+
+        estadisticas = calcular_promedios(
+            partidas_campeon
+        )
+
+        cantidad = len(
+            partidas_campeon
+        )
+
+        porcentaje_uso = (
+            cantidad
+            / len(partidas_validas)
+        ) * 100
+
+        resultado.append({
+
+            "campeon": {
+                "nombre":
+                    nombre_campeon,
+
+                "imagen_icono":
+                    (
+                        "https://ddragon.leagueoflegends.com/"
+                        f"cdn/14.24.1/img/champion/{nombre_campeon}.png"
+                    ),
+
+                "imagen_splash":
+                    (
+                        "https://ddragon.leagueoflegends.com/"
+                        f"cdn/img/champion/splash/{nombre_campeon}_0.jpg"
+                    )
+            },
+
+            "partidas":
+                cantidad,
+
+            "porcentaje_uso":
+                round(
+                    porcentaje_uso,
+                    2
+                ),
+
+            "victorias":
+                estadisticas[
+                    "resultados"
+                ][
+                    "victorias"
+                ],
+
+            "derrotas":
+                estadisticas[
+                    "resultados"
+                ][
+                    "derrotas"
+                ],
+
+            "win_rate":
+                estadisticas[
+                    "resultados"
+                ][
+                    "win_rate"
+                ],
+
+            "kda":
+                estadisticas[
+                    "combate"
+                ][
+                    "kda_promedio"
+                ],
+
+            "kills_promedio":
+                estadisticas[
+                    "combate"
+                ][
+                    "kills_promedio"
+                ],
+
+            "muertes_promedio":
+                estadisticas[
+                    "combate"
+                ][
+                    "muertes_promedio"
+                ],
+
+            "asistencias_promedio":
+                estadisticas[
+                    "combate"
+                ][
+                    "asistencias_promedio"
+                ],
+
+            "cs_por_minuto":
+                estadisticas[
+                    "farmeo"
+                ][
+                    "cs_por_minuto_promedio"
+                ],
+
+            "oro_por_minuto":
+                estadisticas[
+                    "economia"
+                ][
+                    "oro_por_minuto_promedio"
+                ],
+
+            "daño_por_minuto":
+                estadisticas[
+                    "daño"
+                ][
+                    "daño_por_minuto_promedio"
+                ],
+
+            "vision_score":
+                estadisticas[
+                    "vision"
+                ][
+                    "vision_score_promedio"
+                ]
+        })
+
+    # --------------------------------------------------------
+    # ORDENAR POR CANTIDAD DE PARTIDAS
+    # --------------------------------------------------------
+
+    resultado.sort(
+        key=lambda item: (
+            item["partidas"],
+            item["win_rate"]
+        ),
+        reverse=True
+    )
+
+    return resultado
+
+# ============================================================
+# ANÁLISIS POR POSICIÓN
+# ============================================================
+
+def analizar_por_posicion(partidas):
+    """
+    Calcula el rendimiento del jugador de forma independiente
+    para cada posición utilizada en las partidas analizadas.
+
+    Permite comparar:
+        - cantidad de partidas
+        - porcentaje de uso
+        - victorias
+        - derrotas
+        - win rate
+        - KDA
+        - kills promedio
+        - muertes promedio
+        - asistencias promedio
+        - CS por minuto
+        - oro por minuto
+        - daño por minuto
+        - vision score
+    """
+
+    partidas_validas = obtener_partidas_validas(
+        partidas
+    )
+
+    roles = [
+        "TOP",
+        "JUNGLE",
+        "MID",
+        "ADC",
+        "SUPPORT"
+    ]
+
+    total_partidas = len(
+        partidas_validas
+    )
+
+    resultado = {}
+
+
+    for rol in roles:
+
+        partidas_rol = filtrar_partidas_por_rol(
+            partidas_validas,
+            rol
+        )
+
+        cantidad = len(
+            partidas_rol
+        )
+
+
+        # --------------------------------------------------------
+        # SIN PARTIDAS EN EL ROL
+        # --------------------------------------------------------
+
+        if cantidad == 0:
+
+            resultado[rol] = {
+
+                "rol":
+                    rol,
+
+                "disponible":
+                    False,
+
+                "partidas":
+                    0,
+
+                "porcentaje":
+                    0,
+
+                "victorias":
+                    0,
+
+                "derrotas":
+                    0,
+
+                "win_rate":
+                    0,
+
+                "kda":
+                    0,
+
+                "kills_promedio":
+                    0,
+
+                "muertes_promedio":
+                    0,
+
+                "asistencias_promedio":
+                    0,
+
+                "cs_por_minuto":
+                    0,
+
+                "oro_por_minuto":
+                    0,
+
+                "daño_por_minuto":
+                    0,
+
+                "vision_score":
+                    0
+            }
+
+            continue
+
+
+        # --------------------------------------------------------
+        # ESTADÍSTICAS DEL ROL
+        # --------------------------------------------------------
+
+        estadisticas = calcular_promedios(
+            partidas_rol
+        )
+
+
+        porcentaje = (
+            (
+                cantidad
+                / total_partidas
+            )
+            * 100
+            if total_partidas > 0
+            else 0
+        )
+
+
+        resultado[rol] = {
+
+            "rol":
+                rol,
+
+            "disponible":
+                True,
+
+            "partidas":
+                cantidad,
+
+            "porcentaje":
+                round(
+                    porcentaje,
+                    2
+                ),
+
+            "victorias":
+                estadisticas[
+                    "resultados"
+                ][
+                    "victorias"
+                ],
+
+            "derrotas":
+                estadisticas[
+                    "resultados"
+                ][
+                    "derrotas"
+                ],
+
+            "win_rate":
+                estadisticas[
+                    "resultados"
+                ][
+                    "win_rate"
+                ],
+
+            "kda":
+                estadisticas[
+                    "combate"
+                ][
+                    "kda_promedio"
+                ],
+
+            "kills_promedio":
+                estadisticas[
+                    "combate"
+                ][
+                    "kills_promedio"
+                ],
+
+            "muertes_promedio":
+                estadisticas[
+                    "combate"
+                ][
+                    "muertes_promedio"
+                ],
+
+            "asistencias_promedio":
+                estadisticas[
+                    "combate"
+                ][
+                    "asistencias_promedio"
+                ],
+
+            "cs_por_minuto":
+                estadisticas[
+                    "farmeo"
+                ][
+                    "cs_por_minuto_promedio"
+                ],
+
+            "oro_por_minuto":
+                estadisticas[
+                    "economia"
+                ][
+                    "oro_por_minuto_promedio"
+                ],
+
+            "daño_por_minuto":
+                estadisticas[
+                    "daño"
+                ][
+                    "daño_por_minuto_promedio"
+                ],
+
+            "vision_score":
+                estadisticas[
+                    "vision"
+                ][
+                    "vision_score_promedio"
+                ]
+        }
+
+
+    return resultado
+
+
+# ============================================================
+# HU13 - DATOS PARA GRÁFICOS DE RENDIMIENTO
+# ============================================================
+
+def generar_datos_graficos(partidas):
+    """
+    Prepara la evolución del rendimiento del jugador
+    para su visualización mediante gráficos.
+
+    Las partidas recibidas deben corresponder al rol
+    que se desea analizar.
+
+    Genera por partida:
+        - KDA
+        - CS por minuto
+        - oro por minuto
+        - daño por minuto
+        - vision score
+        - resultado
+
+    También calcula:
+        - win rate acumulado
+        - resumen mínimo, máximo y promedio
+    """
+
+    partidas_validas = obtener_partidas_validas(
+        partidas
+    )
+
+    if not partidas_validas:
+
+        return {
+            "disponible": False,
+            "cantidad_partidas": 0,
+            "partidas": [],
+            "resumen": {}
+        }
+
+
+    # ========================================================
+    # ORDEN CRONOLÓGICO
+    # ========================================================
+    #
+    # Riot devuelve normalmente las partidas desde la más
+    # reciente hacia la más antigua.
+    #
+    # Para visualizar evolución:
+    #
+    # antigua -------------------------------> reciente
+    #
+    # invertimos la lista.
+    # ========================================================
+
+    partidas_cronologicas = list(
+        reversed(
+            partidas_validas
+        )
+    )
+
+
+    # ========================================================
+    # VARIABLES
+    # ========================================================
+
+    datos_graficos = []
+
+    victorias_acumuladas = 0
+
+
+    valores_kda = []
+    valores_cs = []
+    valores_oro = []
+    valores_daño = []
+    valores_vision = []
+
+
+    # ========================================================
+    # PROCESAR PARTIDAS
+    # ========================================================
+
+    for indice, partida in enumerate(
+        partidas_cronologicas,
+        start=1
+    ):
+
+        datos_partida = partida.get(
+            "partida",
+            {}
+        )
+
+        resultado = partida.get(
+            "resultado",
+            {}
+        )
+
+        campeon = partida.get(
+            "campeon",
+            {}
+        )
+
+        combate = partida.get(
+            "combate",
+            {}
+        )
+
+        farmeo = partida.get(
+            "farmeo",
+            {}
+        )
+
+        economia = partida.get(
+            "economia",
+            {}
+        )
+
+        daño = partida.get(
+            "daño",
+            {}
+        )
+
+        vision = partida.get(
+            "vision",
+            {}
+        )
+
+
+        # ----------------------------------------------------
+        # RESULTADO
+        # ----------------------------------------------------
+
+        victoria = bool(
+            resultado.get(
+                "victoria",
+                False
+            )
+        )
+
+
+        if victoria:
+            victorias_acumuladas += 1
+
+
+        win_rate_acumulado = (
+            victorias_acumuladas
+            / indice
+        ) * 100
+
+
+        # ----------------------------------------------------
+        # MÉTRICAS
+        # ----------------------------------------------------
+
+        kda = float(
+            combate.get(
+                "kda",
+                0
+            ) or 0
+        )
+
+        cs_por_minuto = float(
+            farmeo.get(
+                "cs_por_minuto",
+                0
+            ) or 0
+        )
+
+        oro_por_minuto = float(
+            economia.get(
+                "oro_por_minuto",
+                0
+            ) or 0
+        )
+
+        daño_por_minuto = float(
+            daño.get(
+                "daño_por_minuto",
+                0
+            ) or 0
+        )
+
+        vision_score = float(
+            vision.get(
+                "vision_score",
+                0
+            ) or 0
+        )
+
+
+        # ----------------------------------------------------
+        # GUARDAR PARA RESUMEN
+        # ----------------------------------------------------
+
+        valores_kda.append(
+            kda
+        )
+
+        valores_cs.append(
+            cs_por_minuto
+        )
+
+        valores_oro.append(
+            oro_por_minuto
+        )
+
+        valores_daño.append(
+            daño_por_minuto
+        )
+
+        valores_vision.append(
+            vision_score
+        )
+
+
+        # ----------------------------------------------------
+        # REGISTRO DEL GRÁFICO
+        # ----------------------------------------------------
+
+        datos_graficos.append({
+
+            "numero":
+                indice,
+
+            "match_id":
+                datos_partida.get(
+                    "match_id"
+                ),
+
+            "campeon":
+                campeon.get(
+                    "nombre",
+                    "Desconocido"
+                ),
+
+            "victoria":
+                victoria,
+
+            "kda":
+                round(
+                    kda,
+                    2
+                ),
+
+            "cs_por_minuto":
+                round(
+                    cs_por_minuto,
+                    2
+                ),
+
+            "oro_por_minuto":
+                round(
+                    oro_por_minuto,
+                    2
+                ),
+
+            "daño_por_minuto":
+                round(
+                    daño_por_minuto,
+                    2
+                ),
+
+            "vision_score":
+                round(
+                    vision_score,
+                    2
+                ),
+
+            "win_rate_acumulado":
+                round(
+                    win_rate_acumulado,
+                    2
+                )
+        })
+
+
+    # ========================================================
+    # FUNCIÓN INTERNA PARA RESUMEN
+    # ========================================================
+
+    def calcular_resumen(
+        valores
+    ):
+
+        if not valores:
+
+            return {
+                "promedio": 0,
+                "minimo": 0,
+                "maximo": 0
+            }
+
+
+        return {
+
+            "promedio":
+                round(
+                    sum(valores)
+                    / len(valores),
+                    2
+                ),
+
+            "minimo":
+                round(
+                    min(valores),
+                    2
+                ),
+
+            "maximo":
+                round(
+                    max(valores),
+                    2
+                )
+        }
+
+
+    # ========================================================
+    # RESPUESTA
+    # ========================================================
+
+    return {
+
+        "disponible":
+            True,
+
+        "cantidad_partidas":
+            len(
+                datos_graficos
+            ),
+
+        "orden":
+            "cronologico",
+
+        "partidas":
+            datos_graficos,
+
+        "resumen": {
+
+            "kda":
+                calcular_resumen(
+                    valores_kda
+                ),
+
+            "cs_por_minuto":
+                calcular_resumen(
+                    valores_cs
+                ),
+
+            "oro_por_minuto":
+                calcular_resumen(
+                    valores_oro
+                ),
+
+            "daño_por_minuto":
+                calcular_resumen(
+                    valores_daño
+                ),
+
+            "vision_score":
+                calcular_resumen(
+                    valores_vision
+                )
+        }
+    }
 
 # ============================================================
 # ANÁLISIS COMPLETO DEL JUGADOR
@@ -1093,6 +1883,14 @@ def analizar_jugador_con_referencia(
         partidas_validas
     )
 
+    # ========================================================
+    # ANÁLISIS POR POSICIÓN
+    # ========================================================
+
+    analisis_posiciones = analizar_por_posicion(
+        partidas_validas
+    )
+
 
     # ========================================================
     # ROL PRINCIPAL
@@ -1123,6 +1921,30 @@ def analizar_jugador_con_referencia(
     # ========================================================
 
     estadisticas = calcular_promedios(
+        partidas_rol
+    )
+
+    # ========================================================
+    # GRÁFICOS DE RENDIMIENTO
+    # ========================================================
+
+    graficos_rendimiento = generar_datos_graficos(
+        partidas_rol
+    )
+
+    # ========================================================
+    # MINERÍA DE DATOS - K-MEANS
+    # ========================================================
+
+    mineria_datos = analizar_patrones_kmeans(
+        partidas_rol
+    )
+
+    # ========================================================
+    # ANÁLISIS POR CAMPEÓN
+    # ========================================================
+    
+    analisis_campeones = analizar_por_campeon(
         partidas_rol
     )
 
@@ -1586,36 +2408,30 @@ def analizar_jugador_con_referencia(
     # ========================================================
     # FORMA RECIENTE
     # ========================================================
-
-    partidas_forma_reciente = partidas_recientes[:10]
+    
+    partidas_forma_reciente = (
+        partidas_recientes[:10]
+    )
     
     forma_reciente = []
-
-    for partida in partidas_recientes[:10]:
-
+    
+    for partida in partidas_forma_reciente:
         forma_reciente.append(
             "V"
             if partida["victoria"]
             else "D"
         )
-
-
-    # ========================================================
-    # VICTORIAS Y DERROTAS RECIENTES
-    # ========================================================
-
-    victorias_recientes = sum(
+    
+        victorias_recientes = sum(
         1
-        for partida in partidas_recientes
+        for partida in partidas_forma_reciente
         if partida["victoria"]
-    )
+        )
 
-    derrotas_recientes = (
-        len(partidas_recientes)
-        - victorias_recientes
-    )
-
-
+        derrotas_recientes = (
+            len(partidas_forma_reciente)
+            - victorias_recientes
+        )
     # ========================================================
     # REFERENCIA PROFESIONAL
     # ========================================================
@@ -1864,7 +2680,34 @@ def analizar_jugador_con_referencia(
 
         "estadisticas_jugador":
             estadisticas,
+        # ----------------------------------------------------
+        # ANÁLISIS POR POSICIÓN
+        # ----------------------------------------------------
 
+        "analisis_posiciones":
+            analisis_posiciones,
+
+        # ----------------------------------------------------
+        # ANÁLISIS POR CAMPEÓN
+        # ----------------------------------------------------
+        
+        "analisis_campeones":
+           analisis_campeones,
+
+        # ========================================================
+        # GRÁFICOS DE RENDIMIENTO
+        # ========================================================
+
+        "graficos_rendimiento":
+            graficos_rendimiento,
+
+            
+        # ----------------------------------------------------
+        # MINERÍA DE DATOS - K-MEANS
+        # ----------------------------------------------------
+
+        "mineria_datos":
+            mineria_datos,
 
         # ----------------------------------------------------
         # COMPARACIÓN

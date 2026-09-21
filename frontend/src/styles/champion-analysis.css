@@ -1,0 +1,1167 @@
+/* ============================================================
+   HU09 - RENDIMIENTO POR CAMPEÓN
+============================================================ */
+
+
+/* ============================================================
+   RESUMEN PRINCIPAL
+============================================================ */
+
+.champion-analysis-summary {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-top: 26px;
+}
+
+
+.champion-analysis-summary > div {
+  min-height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 18px 22px;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.2);
+
+  border-radius: 12px;
+
+  background:
+    rgba(15, 23, 32, 0.7);
+}
+
+
+.champion-analysis-summary span {
+  color:
+    var(--text-blue);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+
+.champion-analysis-summary strong {
+  margin-top: 7px;
+
+  color:
+    var(--gold-bright);
+
+  font-family:
+    "Cinzel",
+    serif;
+
+  font-size: 22px;
+}
+
+
+/* ============================================================
+   CAMPEÓN MÁS UTILIZADO
+============================================================ */
+
+.champion-compact-highlight {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-top: 16px;
+
+  padding: 18px 22px;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.2);
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(200, 170, 110, 0.04),
+      rgba(15, 23, 32, 0.8)
+    );
+}
+
+
+.champion-compact-player {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  min-width: 0;
+}
+
+
+.champion-compact-player img {
+  width: 58px;
+  height: 58px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.55);
+
+  border-radius: 9px;
+}
+
+
+.champion-compact-player span {
+  display: block;
+
+  color:
+    var(--gold);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+
+.champion-compact-player strong {
+  display: block;
+
+  margin-top: 4px;
+
+  color:
+    var(--gold-bright);
+
+  font-family:
+    "Cinzel",
+    serif;
+
+  font-size: 20px;
+}
+
+
+.champion-compact-player small {
+  display: block;
+
+  margin-top: 4px;
+
+  color:
+    var(--text-blue);
+
+  font-size: 10px;
+}
+
+
+.champion-compact-metrics {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(90px, 1fr));
+
+  gap: 8px;
+}
+
+
+.champion-compact-metrics > div {
+  min-width: 100px;
+
+  padding: 10px 15px;
+
+  border-left:
+    1px solid
+    rgba(200, 170, 110, 0.15);
+
+  text-align: center;
+}
+
+
+.champion-compact-metrics span {
+  display: block;
+
+  color:
+    var(--text-dim);
+
+  font-size: 7px;
+  font-weight: 700;
+
+  letter-spacing: 0.07em;
+}
+
+
+.champion-compact-metrics strong {
+  display: block;
+
+  margin-top: 4px;
+
+  color:
+    var(--gold-bright);
+
+  font-size: 14px;
+}
+
+
+/* ============================================================
+   BOTÓN VER TODOS
+============================================================ */
+
+.champion-show-all {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 18px;
+}
+
+
+.champion-show-all button {
+  min-width: 220px;
+
+  padding: 10px 22px;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.45);
+
+  border-radius: 8px;
+
+  background:
+    rgba(200, 170, 110, 0.04);
+
+  color:
+    var(--gold-bright);
+
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.champion-show-all button:hover {
+  border-color:
+    var(--gold);
+
+  background:
+    rgba(200, 170, 110, 0.1);
+
+  transform:
+    translateY(-1px);
+}
+
+
+/* ============================================================
+   NOTA
+============================================================ */
+
+.champion-analysis-note {
+  margin-top: 18px;
+
+  padding: 11px 14px;
+
+  border-left:
+    2px solid
+    rgba(200, 170, 110, 0.6);
+
+  background:
+    rgba(200, 170, 110, 0.025);
+}
+
+
+.champion-analysis-note span {
+  color:
+    var(--gold);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+
+.champion-analysis-note p {
+  margin:
+    4px 0 0;
+
+  color:
+    var(--text-dim);
+
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+
+/* ============================================================
+   MODAL
+============================================================ */
+
+.champion-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    rgba(3, 7, 12, 0.88);
+
+  backdrop-filter:
+    blur(6px);
+
+  -webkit-backdrop-filter:
+    blur(6px);
+}
+
+
+.champion-modal {
+  width:
+    min(1500px, 100%);
+
+  max-height:
+    calc(100vh - 40px);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.3);
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #101821,
+      #080d14
+    );
+
+  box-shadow:
+    0 30px 90px
+    rgba(0, 0, 0, 0.65);
+
+  animation:
+    championModalIn 0.22s ease;
+}
+
+
+/* ============================================================
+   HEADER MODAL
+============================================================ */
+
+.champion-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  flex-shrink: 0;
+
+  gap: 20px;
+
+  padding:
+    22px 26px 18px;
+
+  border-bottom:
+    1px solid
+    rgba(200, 170, 110, 0.15);
+
+  background:
+    rgba(9, 14, 21, 0.98);
+}
+
+
+.champion-modal-eyebrow {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color:
+    var(--gold);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+}
+
+
+.champion-modal-header h2 {
+  margin: 0;
+
+  color:
+    var(--gold-bright);
+
+  font-family:
+    "Cinzel",
+    serif;
+
+  font-size: 25px;
+}
+
+
+.champion-modal-header p {
+  margin:
+    6px 0 0;
+
+  color:
+    var(--text-dim);
+
+  font-size: 10px;
+}
+
+
+.champion-modal-header p strong {
+  color:
+    var(--gold-bright);
+}
+
+
+.champion-modal-close {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.25);
+
+  border-radius: 8px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  color:
+    var(--gold-bright);
+
+  cursor: pointer;
+
+  font-size: 23px;
+  line-height: 1;
+}
+
+
+.champion-modal-close:hover {
+  border-color:
+    var(--gold);
+
+  background:
+    rgba(200, 170, 110, 0.08);
+}
+
+
+/* ============================================================
+   TOOLBAR
+============================================================ */
+
+.champion-modal-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  flex-shrink: 0;
+
+  padding:
+    10px 26px;
+
+  border-bottom:
+    1px solid
+    rgba(200, 170, 110, 0.1);
+
+  color:
+    var(--text-blue);
+
+  font-size: 9px;
+}
+
+
+/* ============================================================
+   BODY
+============================================================ */
+
+.champion-modal-body {
+  flex: 1;
+
+  min-height: 0;
+
+  overflow-y: auto;
+
+  padding: 18px 26px;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(200, 170, 110, 0.65)
+    rgba(15, 23, 32, 0.8);
+}
+
+
+.champion-modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+.champion-modal-body::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background:
+    rgba(200, 170, 110, 0.6);
+}
+
+
+/* ============================================================
+   GRID - 6 POR PÁGINA
+============================================================ */
+
+.champion-modal-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+
+/* ============================================================
+   TARJETA
+============================================================ */
+
+.champion-modal-card {
+  min-width: 0;
+
+  padding: 15px;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.18);
+
+  border-radius: 10px;
+
+  background:
+    rgba(15, 23, 32, 0.72);
+}
+
+
+.champion-modal-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+
+.champion-modal-identity {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+
+  gap: 11px;
+}
+
+
+.champion-modal-identity img {
+  width: 50px;
+  height: 50px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.55);
+
+  border-radius: 8px;
+}
+
+
+.champion-modal-most-used {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color:
+    var(--gold);
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+
+.champion-modal-identity h3 {
+  margin: 0;
+
+  color:
+    var(--gold-bright);
+
+  font-family:
+    "Cinzel",
+    serif;
+
+  font-size: 16px;
+}
+
+
+.champion-modal-use {
+  display: block;
+
+  margin-top: 3px;
+
+  color:
+    var(--text-blue);
+
+  font-size: 9px;
+}
+
+
+.champion-modal-games {
+  flex-shrink: 0;
+
+  text-align: right;
+}
+
+
+.champion-modal-games strong {
+  display: block;
+
+  color:
+    var(--gold);
+
+  font-family:
+    "Cinzel",
+    serif;
+
+  font-size: 22px;
+}
+
+
+.champion-modal-games span {
+  color:
+    var(--text-blue);
+
+  font-size: 8px;
+}
+
+
+/* ============================================================
+   RESULTADOS
+============================================================ */
+
+.champion-modal-results {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 12px;
+
+  padding: 9px 11px;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.11);
+
+  border-radius: 8px;
+
+  background:
+    rgba(255, 255, 255, 0.015);
+}
+
+
+.champion-modal-results > div:first-child {
+  display: flex;
+
+  gap: 10px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+.champion-modal-win {
+  color: #52c7a5;
+}
+
+
+.champion-modal-loss {
+  color: #d36a6a;
+}
+
+
+.champion-modal-results > div:last-child {
+  text-align: right;
+}
+
+
+.champion-modal-results > div:last-child span {
+  display: block;
+
+  color:
+    var(--text-blue);
+
+  font-size: 7px;
+  font-weight: 700;
+}
+
+
+.champion-modal-results > div:last-child strong {
+  display: block;
+
+  margin-top: 2px;
+
+  color:
+    var(--gold-bright);
+
+  font-size: 13px;
+}
+
+
+/* ============================================================
+   MÉTRICAS
+============================================================ */
+
+.champion-modal-metrics {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  gap: 6px;
+
+  margin-top: 9px;
+}
+
+
+.champion-modal-metrics > div {
+  padding: 8px 4px;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.1);
+
+  border-radius: 7px;
+
+  text-align: center;
+}
+
+
+.champion-modal-metrics span {
+  display: block;
+
+  color:
+    var(--text-blue);
+
+  font-size: 6px;
+  font-weight: 700;
+}
+
+
+.champion-modal-metrics strong {
+  display: block;
+
+  margin-top: 3px;
+
+  color:
+    var(--gold-bright);
+
+  font-size: 11px;
+}
+
+
+/* ============================================================
+   COMBATE
+============================================================ */
+
+.champion-modal-combat {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 8px;
+
+  margin-top: 9px;
+}
+
+
+.champion-modal-combat > span {
+  color:
+    var(--text-blue);
+
+  font-size: 7px;
+
+  text-align: center;
+}
+
+
+.champion-modal-combat strong {
+  display: block;
+
+  margin-top: 3px;
+
+  color:
+    var(--text);
+
+  font-size: 10px;
+}
+
+
+/* ============================================================
+   USO
+============================================================ */
+
+.champion-modal-usage {
+  height: 3px;
+
+  margin-top: 10px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+}
+
+
+.champion-modal-usage > div {
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    var(--gold);
+}
+
+
+/* ============================================================
+   MUESTRA PEQUEÑA
+============================================================ */
+
+.champion-modal-warning {
+  margin:
+    10px 0 0;
+
+  padding:
+    7px 9px;
+
+  border-left:
+    2px solid
+    var(--gold);
+
+  background:
+    rgba(200, 170, 110, 0.035);
+
+  color:
+    var(--text-dim);
+
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+
+.champion-modal-warning strong {
+  color:
+    var(--gold-bright);
+}
+
+
+/* ============================================================
+   FOOTER / PAGINACIÓN
+============================================================ */
+
+.champion-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  flex-shrink: 0;
+
+  gap: 16px;
+
+  padding:
+    12px 26px;
+
+  border-top:
+    1px solid
+    rgba(200, 170, 110, 0.14);
+
+  background:
+    rgba(9, 14, 21, 0.98);
+}
+
+
+.champion-modal-pagination {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+
+.champion-modal-pagination > button,
+.champion-modal-pages button,
+.champion-modal-footer-close {
+  min-height: 32px;
+
+  padding:
+    6px 12px;
+
+  border:
+    1px solid
+    rgba(200, 170, 110, 0.3);
+
+  border-radius: 6px;
+
+  background:
+    rgba(200, 170, 110, 0.04);
+
+  color:
+    var(--gold-bright);
+
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 9px;
+}
+
+
+.champion-modal-pagination > button:hover:not(:disabled),
+.champion-modal-pages button:hover,
+.champion-modal-footer-close:hover {
+  border-color:
+    var(--gold);
+
+  background:
+    rgba(200, 170, 110, 0.1);
+}
+
+
+.champion-modal-pagination > button:disabled {
+  opacity: 0.35;
+
+  cursor: not-allowed;
+}
+
+
+.champion-modal-pages {
+  display: flex;
+
+  gap: 4px;
+}
+
+
+.champion-modal-pages button {
+  min-width: 32px;
+
+  padding:
+    6px 8px;
+}
+
+
+.champion-modal-pages button.activo {
+  border-color:
+    var(--gold);
+
+  background:
+    rgba(200, 170, 110, 0.15);
+
+  color:
+    var(--gold);
+}
+
+
+.champion-modal-pagination > span {
+  margin:
+    0 4px;
+
+  color:
+    var(--text-dim);
+
+  font-size: 9px;
+}
+
+
+.champion-modal-pagination > span strong {
+  color:
+    var(--gold-bright);
+}
+
+
+.champion-modal-single-page {
+  color:
+    var(--text-dim);
+
+  font-size: 9px;
+}
+
+
+/* ============================================================
+   ANIMACIÓN
+============================================================ */
+
+@keyframes championModalIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(12px)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 1000px) {
+
+  .champion-compact-highlight {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+
+  .champion-compact-metrics {
+    width: 100%;
+  }
+
+
+  .champion-modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .champion-analysis-summary {
+    grid-template-columns: 1fr;
+  }
+
+
+  .champion-modal-overlay {
+    padding: 10px;
+  }
+
+
+  .champion-modal {
+    max-height:
+      calc(100vh - 20px);
+  }
+
+
+  .champion-modal-header {
+    padding: 18px;
+  }
+
+
+  .champion-modal-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 4px;
+
+    padding:
+      9px 18px;
+  }
+
+
+  .champion-modal-body {
+    padding:
+      14px 18px;
+  }
+
+
+  .champion-modal-footer {
+    align-items: stretch;
+    flex-direction: column;
+
+    padding:
+      12px 18px;
+  }
+
+
+  .champion-modal-pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+
+  .champion-modal-footer-close {
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .champion-compact-metrics {
+    grid-template-columns: 1fr;
+  }
+
+
+  .champion-compact-metrics > div {
+    border-left: 0;
+
+    border-top:
+      1px solid
+      rgba(200, 170, 110, 0.15);
+  }
+
+
+  .champion-modal-metrics {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .champion-modal-combat {
+    grid-template-columns: 1fr;
+  }
+
+}

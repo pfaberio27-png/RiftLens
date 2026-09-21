@@ -41,6 +41,14 @@ import StrengthsWeaknesses
 import Recommendations
   from "./components/Recommendations";
 
+import KMeansAnalysis
+  from "./components/KMeansAnalysis";
+
+import ChampionAnalysis
+  from "./components/ChampionAnalysis";
+
+import PerformanceCharts
+  from "./components/PerformanceCharts";
 
 function App() {
 
@@ -441,11 +449,56 @@ function App() {
 
               <RoleDistribution
                 muestra={
-                  analisis
-                    .muestra
+                  analisis.muestra
+                }
+                analisisPosiciones={
+                  analisis.analisis_posiciones
                 }
               />
 
+              {/* =================================================
+              ANÁLISIS POR CAMPEÓN
+              ================================================= */}
+
+              <ChampionAnalysis
+                campeones={
+                  analisis
+                    .analisis_campeones
+                }
+                rolPrincipal={
+                  analisis
+                    .muestra
+                    .rol_principal
+                }
+              />
+
+              {/* =================================================
+              EVOLUCIÓN DEL RENDIMIENTO
+              ================================================= */}
+
+              <PerformanceCharts
+                graficos={
+                  analisis
+                    .graficos_rendimiento
+                }
+                rolPrincipal={
+                  analisis
+                    .muestra
+                    .rol_principal
+                }
+              />
+
+
+              {/* =================================================
+              MINERÍA DE DATOS - K-MEANS
+              ================================================= */}
+              
+              <KMeansAnalysis
+              mineria={
+                analisis
+                .mineria_datos
+                }
+              />
 
               {/* =================================================
                   FORTALEZAS Y DEBILIDADES

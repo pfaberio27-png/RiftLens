@@ -614,6 +614,166 @@ export interface Recomendacion {
 
 }
 
+// ============================================================
+// ANÁLISIS POR CAMPEÓN
+// ============================================================
+
+export interface CampeonAnalisis {
+
+  nombre: string;
+
+  imagen_icono: string | null;
+
+  imagen_splash: string | null;
+
+}
+
+
+export interface AnalisisCampeon {
+
+  campeon: CampeonAnalisis;
+
+  partidas: number;
+
+  porcentaje_uso: number;
+
+  victorias: number;
+
+  derrotas: number;
+
+  win_rate: number;
+
+  kda: number;
+
+  kills_promedio: number;
+
+  muertes_promedio: number;
+
+  asistencias_promedio: number;
+
+  cs_por_minuto: number;
+
+  oro_por_minuto: number;
+
+  daño_por_minuto: number;
+
+  vision_score: number;
+
+}
+
+// ============================================================
+// ANÁLISIS POR POSICIÓN
+// ============================================================
+
+export interface AnalisisPosicion {
+
+  rol: string;
+
+  disponible: boolean;
+
+  partidas: number;
+
+  porcentaje: number;
+
+  victorias: number;
+
+  derrotas: number;
+
+  win_rate: number;
+
+  kda: number;
+
+  kills_promedio: number;
+
+  muertes_promedio: number;
+
+  asistencias_promedio: number;
+
+  cs_por_minuto: number;
+
+  oro_por_minuto: number;
+
+  daño_por_minuto: number;
+
+  vision_score: number;
+
+}
+
+
+export interface AnalisisPosiciones {
+
+  TOP: AnalisisPosicion;
+
+  JUNGLE: AnalisisPosicion;
+
+  MID: AnalisisPosicion;
+
+  ADC: AnalisisPosicion;
+
+  SUPPORT: AnalisisPosicion;
+
+}
+
+// ============================================================
+// HU13 - GRÁFICOS DE RENDIMIENTO
+// ============================================================
+
+export interface PuntoGraficoRendimiento {
+  numero: number;
+
+  match_id: string | null;
+
+  campeon: string;
+
+  victoria: boolean;
+
+  kda: number;
+
+  cs_por_minuto: number;
+
+  oro_por_minuto: number;
+
+  daño_por_minuto: number;
+
+  vision_score: number;
+
+  win_rate_acumulado: number;
+}
+
+
+export interface ResumenMetricaGrafico {
+  promedio: number;
+
+  minimo: number;
+
+  maximo: number;
+}
+
+
+export interface ResumenGraficosRendimiento {
+  kda: ResumenMetricaGrafico;
+
+  cs_por_minuto: ResumenMetricaGrafico;
+
+  oro_por_minuto: ResumenMetricaGrafico;
+
+  daño_por_minuto: ResumenMetricaGrafico;
+
+  vision_score: ResumenMetricaGrafico;
+}
+
+
+export interface GraficosRendimiento {
+  disponible: boolean;
+
+  cantidad_partidas: number;
+
+  orden?: string;
+
+  partidas: PuntoGraficoRendimiento[];
+
+  resumen: ResumenGraficosRendimiento;
+}
 
 // ============================================================
 // ANÁLISIS COMPLETO
@@ -635,6 +795,14 @@ export interface AnalisisCompleto {
 
   estadisticas_jugador: EstadisticasJugador;
 
+  analisis_posiciones: AnalisisPosiciones;
+
+  analisis_campeones: AnalisisCampeon[];
+  
+  graficos_rendimiento: GraficosRendimiento;
+
+  mineria_datos: MineriaDatosKMeans;
+
   comparacion: Comparacion;
 
   score: Score;
@@ -649,6 +817,89 @@ export interface AnalisisCompleto {
 
 }
 
+// ============================================================
+// MINERÍA DE DATOS - K-MEANS
+// ============================================================
+
+export interface MetricasClusterKMeans {
+
+  kda: number;
+
+  cs_por_minuto: number;
+
+  oro_por_minuto: number;
+
+  daño_por_minuto: number;
+
+  vision_score: number;
+
+}
+
+
+export interface EvaluacionClusterKMeans {
+
+  k: number;
+
+  silhouette_score: number;
+
+  inercia: number;
+
+}
+
+
+export interface ClusterKMeans {
+
+  cluster: number;
+
+  cantidad_partidas: number;
+
+  porcentaje: number;
+
+  metricas_promedio: MetricasClusterKMeans;
+
+}
+
+
+export interface AsignacionKMeans {
+
+  indice_partida: number;
+
+  match_id: string | null;
+
+  campeon: string | null;
+
+  cluster: number;
+
+}
+
+
+export interface MineriaDatosKMeans {
+
+  disponible: boolean;
+
+  motivo?: string;
+
+  algoritmo: string;
+
+  normalizacion?: string;
+
+  criterio_seleccion_k?: string;
+
+  partidas_utilizadas: number;
+
+  variables: string[];
+
+  numero_clusters: number;
+
+  silhouette_score?: number | null;
+
+  evaluacion_clusters: EvaluacionClusterKMeans[];
+
+  clusters: ClusterKMeans[];
+
+  asignaciones?: AsignacionKMeans[];
+
+}
 
 // ============================================================
 // RESPUESTA API
