@@ -189,7 +189,15 @@ function PlayerHero({
 
             <span>
 
-              Winrate (
+              Win rate ·{" "}
+
+              {
+                formatearRol(
+                  analisis.muestra.rol_principal
+                )
+              }
+
+              {" ("}
 
               {
                 analisis
